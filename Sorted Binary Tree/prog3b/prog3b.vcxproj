@@ -118,15 +118,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BSTMain.cpp" />
-    <ClCompile Include="BSTree.cpp" />
     <ClCompile Include="BTree.cpp" />
-    <ClCompile Include="prog3a1.cpp" />
     <ClCompile Include="prog3a2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BSTree.h" />
     <ClInclude Include="BTree.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="prog3a2.txt" />
+    <Text Include="prog3b1.txt" />
+    <Text Include="prog3b2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

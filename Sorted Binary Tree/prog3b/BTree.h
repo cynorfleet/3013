@@ -8,7 +8,7 @@ using namespace std;
 //or referencing an item in the tree.  Each item has at most two 
 //children.  The cursor can reference any item in the tree
 
-typedef int ItemType;
+typedef char ItemType;
 
 class BTree
 {

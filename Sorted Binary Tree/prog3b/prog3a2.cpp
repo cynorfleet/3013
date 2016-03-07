@@ -11,116 +11,127 @@ using namespace std;
 
 void DoBuilding(BTree  & T, ifstream & infile, char dir);
 /*precond: T is created and infile is open for reading and
-file is in "correct" format
+			file is in "correct" format
 postcond:  Reads the file and builds up the data in the subtree
-referenced by the cursor in preOrder
-dir is the left or right child position the next item goes into
-checks:  none  */
+			referenced by the cursor in preOrder
+			dir is the left or right child position the next item goes into
+checks:	   none  */
 
 void BuildTree(BTree  & T, ifstream & infile);
 /*precond: T is created and infile is open for reading
-and file is in "correct" format
+			and file is in "correct" format
 postcond:  Reads the file and builds up the data in the Tree in preOrder
-checks:  none  */
+checks:	   none  */
 
 void DoInOrder(BTree  & T);
 /*precond:  T is created
-postcond: Traverses the binary subtree referenced by T's cursor in inorder.
-Visit a node means print out its data to monitor.  T = #T.
-checks:   none */
+postcond:   Traverses the binary subtree referenced by T's cursor in inorder.
+			Visit a node means print out its data to monitor.  T = #T.
+checks:     none */
 
 void Inorder(BTree  & T);
 /*precond:  T is created
-postcond: Traverses the binary tree T in inorder.
-Visit a node means print out its data to monitor.
-T = #T, except T's cursor is referencing the root
-checks:   none */
+postcond:   Traverses the binary tree T in inorder.
+			 Visit a node means print out its data to monitor.
+			 T = #T, except T's cursor is referencing the root
+checks:     none */
 
 // DECLARE AND SPECIFY ADDITIONAL NON-MEMBER FUNCTIONS HERE
 
 void Preorder(BTree & T);
 /*precond:  T is created
-postcond: Traverses the binary tree T in preorder.
-Visit a node means print out its data to monitor.
-T = #T, except T's cursor is referencing the root
-checks:   none */
+postcond:   Traverses the binary tree T in preorder.
+			 Visit a node means print out its data to monitor.
+			 T = #T, except T's cursor is referencing the root
+checks:     none */
 
 void DoPreorder(BTree & T);
 /*precond:  T is created
-postcond: Traverses the binary tree T in preorder.
-Visit a node means print out its data to monitor.
-T = #T, except T's cursor is referencing the root
-checks:   none */
+postcond:   Traverses the binary tree T in preorder.
+			 Visit a node means print out its data to monitor.
+			 T = #T, except T's cursor is referencing the root
+checks:     none */
 
 void Postorder(BTree & T);
 /*precond:  T is created
-postcond: Traverses the binary tree T in postorder.
-Visit a node means print out its data to monitor.
-T = #T, except T's cursor is referencing the root
-checks:   none */
+postcond:   Traverses the binary tree T in postorder.
+			 Visit a node means print out its data to monitor.
+			 T = #T, except T's cursor is referencing the root
+checks:     none */
 
 void DoPostorder(BTree & T);
 /*precond:  T is created
-postcond: Traverses the binary tree T in postorder.
-Visit a node means print out its data to monitor.
-T = #T, except T's cursor is referencing the root
-checks:   none */
+postcond:	Traverses the binary tree T in postorder.
+		     Visit a node means print out its data to monitor.
+		     T = #T, except T's cursor is referencing the root
+checks:		none */
 
 
 void SumTree(BTree & T, int & acounter);
 /*precond:  T is created, counter is initialized
-postcond: Traverses the binary tree T in inorder.
-Visit a node means print out its data to monitor.
-T = #T, except T's cursor is referencing the root,
-while incrementing counter by value of node;
-checks:   none */
+postcond:   Traverses the binary tree T in inorder.
+			 Visit a node means print out its data to monitor.
+			 T = #T, except T's cursor is referencing the root,
+			 while incrementing counter by value of node;
+checks:     none */
 
 void DoSumTree(BTree & T, int & acounter);
 /*precond:  T is created, counter is initialized
-postcond: Traverses the binary tree T in inorder.
-Visit a node means print out its data to monitor.
-T = #T, except T's cursor is referencing the root,
-while incrementing counter by value of node;
-checks:   none */
+postcond:   Traverses the binary tree T in inorder.
+			 Visit a node means print out its data to monitor.
+			 T = #T, except T's cursor is referencing the root,
+			 while incrementing counter by value of node;
+checks:     none */
+
+int ord(char item);
+/*precond:  a valid char is passed in
+postcond:   Converts the char to an int
+checks:     none */
+
+void welcome(ifstream & infile, int& expcounter);
+/*precond:  a valid infile is passed in
+postcond:   displays welcome msg and reads number of expressions
+checks:     none */
+
+void closeing(ifstream & infile);
+/*precond:  a valid infile is passed in
+postcond:   displays closing msg and closes infile
+checks:     none */
 
 int main()
 {
 	BTree T;
 	ifstream infile;
-	char infilename[40];
 	int treecounter = 0;
+	int expcounter = 0;
 
-	// CALL FUNCTION TO SHOW INTRO HERE
+	//read number of expressions
+	welcome(infile, expcounter);
 
-	//open input file
-	cout << " Please enter name of input file:  ";
-	cin >> infilename;
-	cout << endl;
-	infile.open(infilename);
+		//Build the tree 
+		BuildTree(T, infile);
 
-	//Build the tree and print it out in InOrder
-	BuildTree(T, infile);
-	cout << "  The inorder traversal of the tree " << endl;
-	Inorder(T);
 
-	// print it out in PreOrder
-	cout << "  The Preorder traversal of the tree " << endl;
-	Preorder(T);
+		//print it out in InOrder
+		cout << "The inorder traversal of the tree " << endl;
+		Inorder(T);
 
-	// print it out in PostOrder
-	cout << "  The postorder traversal of the tree " << endl;
-	Postorder(T);
+		// print it out in PreOrder
+		cout << "The Preorder traversal of the tree " << endl;
+		Preorder(T);
 
-	// print Item Sum
-	cout << "  The Sum of Items in tree " << endl;
-	cout << "The Sum is: ";
-	SumTree(T, treecounter);
-	cout << treecounter << endl;
-
-	//close input file
-	infile.close();
-
-	//CALL FUNCTION TO SHOW EXIT MESSAGE HERE
+		// print it out in PostOrder
+		cout << "The postorder traversal of the tree " << endl;
+		Postorder(T);
+	
+		// print Item Sum
+		cout << "The Sum of Items in tree " << endl;
+		cout << "The Sum is: ";
+		SumTree(T, treecounter);
+		cout << treecounter << endl;
+	
+		//close input file
+		closeing(infile);
 
 	system("pause");
 
@@ -358,4 +369,39 @@ void DoSumTree(BTree  & T, int & acounter)
 			T.ShiftUp();
 		}
 	}
+}
+
+int ord(char item)
+{
+	int digit = int(item);
+	return digit - 48;
+}
+
+void welcome(ifstream & infile, int& expcounter)
+{
+	char infilename[40];
+	do
+	{
+		//open input file
+		cout << "Please enter name of input file:  ";
+		cin >> infilename;
+		cout << endl;
+		infile.open(infilename);
+
+		if (!infile)
+			cout << "Invalid path. Please reenter.\n\n";
+	}
+	//loop until valid infile
+	while (!infile);
+
+	cout << "This program will read in a determined amount of\n";
+	cout << "expressions, reduce, and evaluate them.\n\n";
+	infile >> expcounter;
+}
+
+void closeing(ifstream & infile)
+{
+	cout << "\n\nTHANK YOU\n";
+	//close infile
+	infile.close();
 }

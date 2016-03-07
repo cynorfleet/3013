@@ -18,16 +18,7 @@
     <ClCompile Include="BTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="prog3a1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="prog3a2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BSTMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BSTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,8 +26,16 @@
     <ClInclude Include="BTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BSTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="prog3b1.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="prog3b2.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="prog3a2.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
