@@ -123,7 +123,7 @@ void BSTree::__Insert(Node *& parent, Node *&subroot, int data){
 		subroot->left = NULL;
 		subroot->right = NULL;
 		subroot->parent = parent;
-		cursor = suboot;
+		cursor = subroot; 
 	}
 	else{
 		if (data < subroot->data){
