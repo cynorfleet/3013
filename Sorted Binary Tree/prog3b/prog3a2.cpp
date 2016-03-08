@@ -8,6 +8,7 @@
 #include <string>
 #include <fstream>
 #include "BTree.h"
+
 using namespace std;
 
 void DoBuildTree(BTree  & T, ifstream & infile, char dir);
@@ -15,18 +16,21 @@ void DoBuildTree(BTree  & T, ifstream & infile, char dir);
 			file is in "correct" format
 postcond:  Reads the file and builds up the data in the subtree
 			referenced by the cursor in preOrder
-			dir is the left or right child position the next item goes into
+			dir is the left or right child position the next
+			item goes into
 checks:	   none  */
 
 void BuildTree(BTree  & T, ifstream & infile);
 /*precond: T is created and infile is open for reading
 			and file is in "correct" format
-postcond:  Reads the file and builds up the data in the Tree in preOrder
+postcond:  Reads the file and builds up the data in the Tree
+			in preOrder
 checks:	   none  */
 
 void DoInOrder(BTree  & T);
 /*precond:  T is created
-postcond:   Traverses the binary subtree referenced by T's cursor in inorder.
+postcond:   Traverses the binary subtree referenced by T's cursor
+			in inorder.
 			Visit a node means print out its data to monitor.  T = #T.
 checks:     none */
 
@@ -99,6 +103,19 @@ void closeing(ifstream & infile);
 postcond:   displays closing msg and closes infile
 checks:     none */
 
+bool AllConsts(BTree& T);
+/*precond:	a initialized tree
+postcond:   if tree contains all constants and operators,
+			true is returned
+checks:     none */
+
+bool DoAllConsts(BTree& T);
+/*precond:  a initialized tree
+postcond:	Traverses the binary tree T in Preorder.
+			If tree contains all constants and operators,
+			true is returned
+checks:     none */
+
 int main()
 {
 	BTree T;
@@ -114,6 +131,8 @@ int main()
 	{
 		//Build the tree 
 		BuildTree(T, infile);
+
+		AllConsts(T);
 
 		//print it out in InOrder
 		cout << "The inorder traversal of the tree " << endl;
@@ -259,7 +278,6 @@ void Inorder(BTree  & T)
 
 //DEFINE ADDITIONAL NON-MEMBER FUNCTIONS HERE
 
-//called by Preorder
 void Preorder(BTree  & T)
 {
 	T.ShiftToRoot();
@@ -288,7 +306,7 @@ void DoPreorder(BTree & T)
 		cout << Item << "  ";
 
 		//not a leaf, has a left child, traverse left subtree
-		//of subtree in InOrder
+		//of subtree in PreOrder
 		if (T.HasLeftChild())
 		{
 			T.ShiftLeft();
@@ -297,7 +315,7 @@ void DoPreorder(BTree & T)
 		}
 
 		//not a leaf, has a right child, traverse right subtree of
-		//subtree in InOrder
+		//subtree in PreOrder
 		if (T.HasRightChild())
 		{
 			T.ShiftRight();
@@ -432,4 +450,67 @@ void closeing(ifstream & infile)
 	cout << "\n\nTHANK YOU\n";
 	//close infile
 	infile.close();
+}
+
+bool AllConsts(BTree& T)
+{
+	bool flag = false;
+	//start at root of tree
+	T.ShiftToRoot();
+
+	if (T.IsEmpty())
+		return false;
+	else
+	{
+		flag = (DoAllConsts(T));
+	}
+	if (flag == true)
+		cout << "TRUE\n\n";
+	else
+		cout << "FALSE\n\n";
+	return flag;
+}
+
+//called by AllConsts
+bool DoAllConsts(BTree& T)
+{
+	bool flag = true;
+	ItemType Item;
+
+	//2 base cases: empty tree or subtree is a leaf
+	if (!T.IsEmpty())
+	{
+		//read contents of root of the subtree
+		T.RetrieveItem(Item);
+		//if item is not a number between 0 and 9
+		if ((ord(Item) < 48) || (ord(Item) > 57)) 
+		{
+			//if its not an opperator
+			if ((Item != '+') && (Item != '-') && 
+				(Item != '*') && (Item != '/'))
+			{
+				flag = false;
+			}
+		}
+
+		//not a leaf, has a left child, traverse left subtree
+		//of subtree in PreOrder
+		if (T.HasLeftChild())
+		{
+			T.ShiftLeft();
+			DoAllConsts(T);
+			T.ShiftUp();
+		}
+
+		//not a leaf, has a right child, traverse right subtree of
+		//subtree in PreOrder
+		if (T.HasRightChild())
+		{
+			T.ShiftRight();
+			DoAllConsts(T);
+			T.ShiftUp();
+		}
+	}
+
+	return flag;
 }
