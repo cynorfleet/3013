@@ -126,7 +126,7 @@ int main()
 	//read number of expressions
 	welcome(infile, expcounter);
 
-	//Do specified number of times
+	//Do specified number of tress
 	for (int x = 0; x < expcounter; x++)
 	{
 		//Build the tree 
@@ -137,7 +137,7 @@ int main()
 		//print it out in InOrder
 		cout << "The inorder traversal of the tree " << endl;
 		Inorder(T);
-
+/*
 		// print it out in PreOrder
 		cout << "The Preorder traversal of the tree " << endl;
 		Preorder(T);
@@ -151,8 +151,8 @@ int main()
 		cout << "The Sum is: ";
 		SumTree(T, treecounter);
 		cout << treecounter << endl;
+*/
 	}
-
 		//close input file
 		closeing(infile);
 
@@ -464,7 +464,7 @@ bool AllConsts(BTree& T)
 	{
 		flag = (DoAllConsts(T));
 	}
-	if (flag == true)
+	if (flag)
 		cout << "TRUE\n\n";
 	else
 		cout << "FALSE\n\n";
@@ -474,6 +474,7 @@ bool AllConsts(BTree& T)
 //called by AllConsts
 bool DoAllConsts(BTree& T)
 {
+	//will return true as default value
 	bool flag = true;
 	ItemType Item;
 
@@ -483,14 +484,16 @@ bool DoAllConsts(BTree& T)
 		//read contents of root of the subtree
 		T.RetrieveItem(Item);
 		//if item is not a number between 0 and 9
-		if ((ord(Item) < 48) || (ord(Item) > 57)) 
+		if ((ord(Item) < 0) || (ord(Item) > 9)) 
 		{
 			//if its not an opperator
-			if ((Item != '+') && (Item != '-') && 
+			if ((Item != '+') && (Item != '-') &&
 				(Item != '*') && (Item != '/'))
 			{
 				flag = false;
 			}
+			else
+				flag = true;
 		}
 
 		//not a leaf, has a left child, traverse left subtree
