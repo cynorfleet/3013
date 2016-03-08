@@ -109,6 +109,9 @@ int main()
 	//read number of expressions
 	welcome(infile, expcounter);
 
+	//Do specified number of times
+	for (int x = 0; x < expcounter; x++)
+	{
 		//Build the tree 
 		BuildTree(T, infile);
 
@@ -123,13 +126,13 @@ int main()
 		// print it out in PostOrder
 		cout << "The postorder traversal of the tree " << endl;
 		Postorder(T);
-	
+
 		// print Item Sum
 		cout << "The Sum of Items in tree " << endl;
 		cout << "The Sum is: ";
 		SumTree(T, treecounter);
 		cout << treecounter << endl;
-	
+	}
 
 		//close input file
 		closeing(infile);
@@ -350,7 +353,6 @@ void DoPostorder(BTree  & T)
 		cout << Item << "  ";
 	}
 }
-
 
 void SumTree(BTree  & T, int & counter)
 {
