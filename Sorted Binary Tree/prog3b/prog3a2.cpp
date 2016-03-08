@@ -5,11 +5,12 @@
 //  to to a tree. Functions will then traverse the tree
 
 #include <iostream>
+#include <string>
 #include <fstream>
 #include "BTree.h"
 using namespace std;
 
-void DoBuilding(BTree  & T, ifstream & infile, char dir);
+void DoBuildTree(BTree  & T, ifstream & infile, char dir);
 /*precond: T is created and infile is open for reading and
 			file is in "correct" format
 postcond:  Reads the file and builds up the data in the subtree
@@ -111,7 +112,6 @@ int main()
 		//Build the tree 
 		BuildTree(T, infile);
 
-
 		//print it out in InOrder
 		cout << "The inorder traversal of the tree " << endl;
 		Inorder(T);
@@ -130,6 +130,7 @@ int main()
 		SumTree(T, treecounter);
 		cout << treecounter << endl;
 	
+
 		//close input file
 		closeing(infile);
 
@@ -138,39 +139,63 @@ int main()
 	return 0;
 }
 
-void DoBuilding(BTree & T, ifstream & infile, char dir)
+void DoBuildTree(BTree & T, ifstream & infile, char dir)
 {
 	ItemType item;
 
-	//read item
-	infile >> item;
+	//read one char
+	item = infile.get();
 
-	//if not eof (by bad data file) and not end of subtree (-1)
-	if (!infile.eof() && (item != -1))
+	//if eof or eol
+	if (infile.eof() || (item == '\n'))
+		return;
+
+	//if not eof and not eol
+	if (!infile.eof() && (item != '\n'))
 	{
-		//build root of new subtree
+		//CONSUME SPACES UNTIL I GET DATA
+		while ((item == ' ') && (!infile.eof()))
+		{
+			item = infile.get();
+		}
+		//BUILD ROOT OF SUBTREE
 		if (T.IsEmpty())
 			T.CreateFirstNode(item);
-		else if (dir == 'L')
+
+		else if (dir == 'L') //means building left subtree so need
+							//to add left child
 		{
 			T.AddLeft(item);
 			T.ShiftLeft();
 		}
-		else
+
+		else //means its 'R' (right)
 		{
 			T.AddRight(item);
 			T.ShiftRight();
+
 		}
 
-		//build left subtree of subtree
-		DoBuilding(T, infile, 'L');
+		//CHECK IF ITEM IS OPERATOR
+		if ((item == '+') || (item == '-') || (item == '/')
+			|| (item == '*'))
+		{
+			//if i just read any of these im building left subtree
+			DoBuildTree(T, infile, 'L');
+		}
+		
+		else
+		{
+			//GETBACK TO ROOT OF SUBTREE if its not operator
+			if (T.HasParent())
+				T.ShiftUp();
 
-		//build right subtree of subtree
-		DoBuilding(T, infile, 'R');
+			//RETREAT UNTIL I GET TO A NODE W/ EMPTY RIGHT SUBTREE
+			while (T.HasParent() && T.HasRightChild())
+				T.ShiftUp();
 
-		//get back to root of subtree 
-		if (T.HasParent())
-			T.ShiftUp();
+			DoBuildTree(T, infile, 'R');
+		} //end else
 	}
 }
 
@@ -178,7 +203,7 @@ void DoBuilding(BTree & T, ifstream & infile, char dir)
 void BuildTree(BTree  & T, ifstream & infile)
 {
 	T.ClearTree();
-	DoBuilding(T, infile, 'L');
+	DoBuildTree(T, infile, 'L');
 	T.ShiftToRoot();
 }
 
@@ -397,6 +422,7 @@ void welcome(ifstream & infile, int& expcounter)
 	cout << "This program will read in a determined amount of\n";
 	cout << "expressions, reduce, and evaluate them.\n\n";
 	infile >> expcounter;
+	infile.get();
 }
 
 void closeing(ifstream & infile)
