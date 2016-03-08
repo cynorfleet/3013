@@ -109,7 +109,7 @@ postcond:   if tree contains all constants and operators,
 			true is returned
 checks:     none */
 
-bool DoAllConsts(BTree& T);
+bool DoAllConsts(BTree& T, bool& flag);
 /*precond:  a initialized tree
 postcond:	Traverses the binary tree T in Preorder.
 			If tree contains all constants and operators,
@@ -454,7 +454,7 @@ void closeing(ifstream & infile)
 
 bool AllConsts(BTree& T)
 {
-	bool flag = false;
+	bool flag = NULL;
 	//start at root of tree
 	T.ShiftToRoot();
 
@@ -462,20 +462,16 @@ bool AllConsts(BTree& T)
 		return false;
 	else
 	{
-		flag = (DoAllConsts(T));
+		flag = (DoAllConsts(T, flag));
 	}
-	if (flag)
-		cout << "TRUE\n\n";
-	else
-		cout << "FALSE\n\n";
+	cout << flag << endl;
 	return flag;
 }
 
 //called by AllConsts
-bool DoAllConsts(BTree& T)
+bool DoAllConsts(BTree& T, bool& flag)
 {
 	//will return true as default value
-	bool flag = true;
 	ItemType Item;
 
 	//2 base cases: empty tree or subtree is a leaf
@@ -486,12 +482,14 @@ bool DoAllConsts(BTree& T)
 		//if item is not a number between 0 and 9
 		if ((ord(Item) < 0) || (ord(Item) > 9)) 
 		{
-			//if its not an opperator
+			//if its not an opperator return false
 			if ((Item != '+') && (Item != '-') &&
 				(Item != '*') && (Item != '/'))
 			{
 				flag = false;
+				return flag;
 			}
+			//if valid char return true
 			else
 				flag = true;
 		}
@@ -501,7 +499,7 @@ bool DoAllConsts(BTree& T)
 		if (T.HasLeftChild())
 		{
 			T.ShiftLeft();
-			DoAllConsts(T);
+			DoAllConsts(T, flag);
 			T.ShiftUp();
 		}
 
@@ -510,7 +508,7 @@ bool DoAllConsts(BTree& T)
 		if (T.HasRightChild())
 		{
 			T.ShiftRight();
-			DoAllConsts(T);
+			DoAllConsts(T, flag);
 			T.ShiftUp();
 		}
 	}
