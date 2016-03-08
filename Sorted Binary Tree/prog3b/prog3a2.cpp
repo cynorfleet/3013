@@ -11,20 +11,28 @@
 
 using namespace std;
 
+struct EquationType
+{
+	int term1 = 0;
+	int term2 = 0;
+	char Opert = NULL;
+	int answer = 0;
+};
+
 void DoBuildTree(BTree  & T, ifstream & infile, char dir);
 /*precond: T is created and infile is open for reading and
-			file is in "correct" format
+		   file is in "correct" format
 postcond:  Reads the file and builds up the data in the subtree
-			referenced by the cursor in preOrder
-			dir is the left or right child position the next
-			item goes into
+		   referenced by the cursor in preOrder
+		   dir is the left or right child position the next
+		   item goes into
 checks:	   none  */
 
 void BuildTree(BTree  & T, ifstream & infile);
 /*precond: T is created and infile is open for reading
-			and file is in "correct" format
+		   and file is in "correct" format
 postcond:  Reads the file and builds up the data in the Tree
-			in preOrder
+		   in preOrder
 checks:	   none  */
 
 void DoInOrder(BTree  & T);
@@ -37,8 +45,8 @@ checks:     none */
 void Inorder(BTree  & T);
 /*precond:  T is created
 postcond:   Traverses the binary tree T in inorder.
-			 Visit a node means print out its data to monitor.
-			 T = #T, except T's cursor is referencing the root
+			Visit a node means print out its data to monitor.
+			T = #T, except T's cursor is referencing the root
 checks:     none */
 
 // DECLARE AND SPECIFY ADDITIONAL NON-MEMBER FUNCTIONS HERE
@@ -46,46 +54,46 @@ checks:     none */
 void Preorder(BTree & T);
 /*precond:  T is created
 postcond:   Traverses the binary tree T in preorder.
-			 Visit a node means print out its data to monitor.
-			 T = #T, except T's cursor is referencing the root
+			Visit a node means print out its data to monitor.
+			T = #T, except T's cursor is referencing the root
 checks:     none */
 
 void DoPreorder(BTree & T);
 /*precond:  T is created
 postcond:   Traverses the binary tree T in preorder.
-			 Visit a node means print out its data to monitor.
-			 T = #T, except T's cursor is referencing the root
+			Visit a node means print out its data to monitor.
+			T = #T, except T's cursor is referencing the root
 checks:     none */
 
 void Postorder(BTree & T);
 /*precond:  T is created
 postcond:   Traverses the binary tree T in postorder.
-			 Visit a node means print out its data to monitor.
-			 T = #T, except T's cursor is referencing the root
+			Visit a node means print out its data to monitor.
+			T = #T, except T's cursor is referencing the root
 checks:     none */
 
 void DoPostorder(BTree & T);
 /*precond:  T is created
 postcond:	Traverses the binary tree T in postorder.
-		     Visit a node means print out its data to monitor.
-		     T = #T, except T's cursor is referencing the root
+		    Visit a node means print out its data to monitor.
+		    T = #T, except T's cursor is referencing the root
 checks:		none */
 
 
 void SumTree(BTree & T, int & acounter);
 /*precond:  T is created, counter is initialized
 postcond:   Traverses the binary tree T in inorder.
-			 Visit a node means print out its data to monitor.
-			 T = #T, except T's cursor is referencing the root,
-			 while incrementing counter by value of node;
+			Visit a node means print out its data to monitor.
+			T = #T, except T's cursor is referencing the root,
+			while incrementing counter by value of node;
 checks:     none */
 
 void DoSumTree(BTree & T, int & acounter);
 /*precond:  T is created, counter is initialized
 postcond:   Traverses the binary tree T in inorder.
-			 Visit a node means print out its data to monitor.
-			 T = #T, except T's cursor is referencing the root,
-			 while incrementing counter by value of node;
+			Visit a node means print out its data to monitor.
+			T = #T, except T's cursor is referencing the root,
+			while incrementing counter by value of node;
 checks:     none */
 
 int ord(char item);
@@ -116,6 +124,18 @@ postcond:	Traverses the binary tree T in Preorder.
 			true is returned
 checks:     none */
 
+int EvalTree(BTree& T);
+/*precond:  a initialized tree
+postcond:	Calls DoEvalTree for evaluation of terms
+checks:     none */
+
+int DoEvalTree(BTree& T);
+/*precond:  a initialized tree
+postcond:	Traverses the binary tree T in Inorder.
+			It will then perform algebraic evaluation of leaf nodes
+			refrencing operator at subroot node
+checks:     none */
+
 int main()
 {
 	BTree T;
@@ -132,12 +152,15 @@ int main()
 		//Build the tree 
 		BuildTree(T, infile);
 
-		AllConsts(T);
-
+		if (AllConsts(T)) 
+		{
+			EvalTree(T);
+		}
+/*
 		//print it out in InOrder
 		cout << "The inorder traversal of the tree " << endl;
 		Inorder(T);
-/*
+
 		// print it out in PreOrder
 		cout << "The Preorder traversal of the tree " << endl;
 		Preorder(T);
@@ -246,7 +269,7 @@ void DoInOrder(BTree  & T)
 			T.ShiftUp();
 		}
 
-		//display root of subtree
+		//Display the item
 		T.RetrieveItem(Item);
 		cout << Item << "  ";
 
@@ -464,7 +487,6 @@ bool AllConsts(BTree& T)
 	{
 		flag = (DoAllConsts(T, flag));
 	}
-	cout << flag << endl;
 	return flag;
 }
 
@@ -512,6 +534,72 @@ bool DoAllConsts(BTree& T, bool& flag)
 			T.ShiftUp();
 		}
 	}
-
 	return flag;
+}
+
+int EvalTree(BTree& T)
+{
+	EquationType equation;
+
+	//start at root of tree
+	T.ShiftToRoot();
+
+	equation.answer = DoEvalTree(T);
+
+	cout << "ANSWER IS:" << equation.answer <<endl;
+	return equation.answer;
+}
+
+int DoEvalTree(BTree& T)
+{
+	ItemType Item;
+	EquationType equation;
+
+	//if its a leaf node
+	if (T.HasNoChildren())
+	{
+		T.RetrieveItem(Item);
+		return ord(Item);
+	}
+
+	else
+	{
+			T.ShiftLeft();
+			equation.term1 = DoEvalTree(T);
+			//go to subroot
+			T.ShiftUp();
+
+			T.ShiftRight();
+			equation.term2 = DoEvalTree(T);
+			//go to subroot
+			T.ShiftUp();		
+	}
+
+	T.RetrieveItem(Item);
+
+	//if its an opperator return false
+	if ((Item == '+') || (Item == '-') ||
+		(Item == '*') || (Item == '/'))
+	{
+		equation.Opert = Item;
+
+		//perform arithmatic and store answer
+		switch (equation.Opert)
+		{
+		case '+':
+			return equation.term1 + equation.term2;
+			break;
+		case '-':
+			return equation.term1 - equation.term2;
+			break;
+		case '/':
+			return equation.term1 / equation.term2;
+			break;
+		case '*':
+			return equation.term1 * equation.term2;
+			break;
+		default:
+			break;
+		}
+	}
 }
