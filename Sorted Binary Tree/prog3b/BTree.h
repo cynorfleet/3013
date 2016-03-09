@@ -166,7 +166,6 @@ public:
 	//          not moved, this tree and this tree are unchanged otherwise.
 	//checks:   none
 
-
 private:
 
 	void CopySubTree(TreeNode * parent, TreeNode * & p, TreeNode *& otherp);

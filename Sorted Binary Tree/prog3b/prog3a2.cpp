@@ -19,6 +19,13 @@ struct EquationType
 	int answer = 0;
 };
 
+struct ReductionType
+{
+	char term1 = NULL;
+	char term2 = NULL;
+	bool flag = NULL;
+};
+
 void DoBuildTree(BTree  & T, ifstream & infile, char dir);
 /*precond: T is created and infile is open for reading and
 		   file is in "correct" format
@@ -136,6 +143,9 @@ postcond:	Traverses the binary tree T in Inorder.
 			refrencing operator at subroot node
 checks:     none */
 
+void ReduceTree(BTree &T);
+void DoReduceTree(BTree &T);
+
 int main()
 {
 	BTree T;
@@ -152,15 +162,15 @@ int main()
 		//Build the tree 
 		BuildTree(T, infile);
 
-		if (AllConsts(T)) 
-		{
+		if (AllConsts(T))
 			EvalTree(T);
-		}
-/*
+		else
+			ReduceTree(T);
+
 		//print it out in InOrder
 		cout << "The inorder traversal of the tree " << endl;
 		Inorder(T);
-
+/*
 		// print it out in PreOrder
 		cout << "The Preorder traversal of the tree " << endl;
 		Preorder(T);
@@ -600,6 +610,148 @@ int DoEvalTree(BTree& T)
 			break;
 		default:
 			break;
+		}
+	}
+}
+
+void ReduceTree(BTree &T)
+{
+	T.ShiftToRoot();
+
+	DoReduceTree(T);
+}
+
+void DoReduceTree(BTree &T)
+{
+	BTree P;
+	ItemType Item;
+	ReductionType expr;
+
+	if (!T.IsEmpty())
+	{
+		//if opperator w/ left child
+		if (T.HasLeftChild())
+		{
+			T.ShiftLeft();
+			T.RetrieveItem(Item);
+			if ((Item != '+') && (Item != '-') && (Item != '*')
+				&& (Item != '/'))
+			{
+				expr.term1 = Item;
+				expr.flag = true;
+				T.ShiftUp();
+			}
+
+			else
+			{
+				expr.flag = false;
+				DoReduceTree(T);
+				T.ShiftUp();
+			}
+		}
+
+		//if opperator w/ right child
+		if (T.HasRightChild())
+		{
+			T.ShiftRight();
+			T.RetrieveItem(Item);
+
+			if ((Item != '+') && (Item != '-') && (Item != '*')
+				&& (Item != '/'))
+			{
+				expr.term2 = Item;
+				expr.flag = true;
+				T.ShiftUp();
+			}
+
+			else
+			{
+				expr.flag = false;
+				DoReduceTree(T);
+				T.ShiftUp();
+			}
+		}
+
+		T.RetrieveItem(Item);
+
+		if ((Item == '+') || (Item == '-') || (Item == '*') || (Item == '/') && (expr.flag))
+		{
+			switch (Item)
+			{
+				//Simplify addition by 0
+			case '+':
+				if (expr.term1 != 0 && expr.term2 != 0)
+				{
+					if (expr.term1 == '0')
+					{
+						T.ChangeItem(expr.term2);
+						T.RemoveLeft();
+						T.RemoveRight();
+					}
+
+					else if (expr.term2 == '0')
+					{
+						T.ChangeItem(expr.term1);
+						T.RemoveLeft();
+						T.RemoveRight();
+					}
+
+				}
+
+				break;
+				//Simplify subtraction by 0
+			case '-':
+				if (expr.term1 == '0')
+				{
+					T.ChangeItem(expr.term2);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				else if (expr.term2 == '0')
+				{
+					T.ChangeItem(expr.term1);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				break;
+				//Simplify multiplication by 0 and 1
+			case'*':
+				if ((expr.term1 == '0') || (expr.term2 == '0'))
+				{
+					T.ChangeItem('0');
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				else if (expr.term1 == '1')
+				{
+					T.ChangeItem(expr.term2);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				else if (expr.term2 == '1')
+				{
+					T.ChangeItem(expr.term1);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				break;
+				//Simplify division by 0 and 1
+			case '/':
+				if (expr.term2 == '0')
+				{
+					cout << endl << "Division by zero." << endl;
+				}
+
+				if (expr.term2 == '1')
+				{
+					T.ChangeItem(expr.term1);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+			default:
+				break;
+			}
+			T.ShiftUp();
 		}
 	}
 }
