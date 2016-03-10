@@ -37,8 +37,5 @@
     <Text Include="prog3a2.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="testinput.txt">
-      <Filter>Source Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>
