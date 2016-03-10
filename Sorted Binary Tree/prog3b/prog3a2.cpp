@@ -19,6 +19,14 @@ struct EquationType
 	int answer = 0;
 };
 
+struct ReductionType
+{
+	char term1 = NULL;
+	char term2 = NULL;
+	bool flag = NULL;
+};
+
+
 void DoBuildTree(BTree  & T, ifstream & infile, char dir);
 /*precond: T is created and infile is open for reading and
 		   file is in "correct" format
@@ -50,51 +58,6 @@ postcond:   Traverses the binary tree T in inorder.
 checks:     none */
 
 // DECLARE AND SPECIFY ADDITIONAL NON-MEMBER FUNCTIONS HERE
-
-void Preorder(BTree & T);
-/*precond:  T is created
-postcond:   Traverses the binary tree T in preorder.
-			Visit a node means print out its data to monitor.
-			T = #T, except T's cursor is referencing the root
-checks:     none */
-
-void DoPreorder(BTree & T);
-/*precond:  T is created
-postcond:   Traverses the binary tree T in preorder.
-			Visit a node means print out its data to monitor.
-			T = #T, except T's cursor is referencing the root
-checks:     none */
-
-void Postorder(BTree & T);
-/*precond:  T is created
-postcond:   Traverses the binary tree T in postorder.
-			Visit a node means print out its data to monitor.
-			T = #T, except T's cursor is referencing the root
-checks:     none */
-
-void DoPostorder(BTree & T);
-/*precond:  T is created
-postcond:	Traverses the binary tree T in postorder.
-		    Visit a node means print out its data to monitor.
-		    T = #T, except T's cursor is referencing the root
-checks:		none */
-
-
-void SumTree(BTree & T, int & acounter);
-/*precond:  T is created, counter is initialized
-postcond:   Traverses the binary tree T in inorder.
-			Visit a node means print out its data to monitor.
-			T = #T, except T's cursor is referencing the root,
-			while incrementing counter by value of node;
-checks:     none */
-
-void DoSumTree(BTree & T, int & acounter);
-/*precond:  T is created, counter is initialized
-postcond:   Traverses the binary tree T in inorder.
-			Visit a node means print out its data to monitor.
-			T = #T, except T's cursor is referencing the root,
-			while incrementing counter by value of node;
-checks:     none */
 
 int ord(char item);
 /*precond:  a valid char is passed in
@@ -136,6 +99,17 @@ postcond:	Traverses the binary tree T in Inorder.
 			refrencing operator at subroot node
 checks:     none */
 
+void ReduceTree(BTree &T);
+/*precond:  a initialized tree
+postcond:	calls DoReduce
+checks:     none */
+
+void DoReduceTree(BTree &T);
+/*precond:  a initialized tree
+postcond:	Traverses the binary tree T.
+			It will then will simplify expressions
+checks:     none */
+
 int main()
 {
 	BTree T;
@@ -152,32 +126,13 @@ int main()
 		//Build the tree 
 		BuildTree(T, infile);
 
-		if (AllConsts(T)) 
-		{
+		if (AllConsts(T))
 			EvalTree(T);
-		}
-/*
-		//print it out in InOrder
-		cout << "The inorder traversal of the tree " << endl;
-		Inorder(T);
-
-		// print it out in PreOrder
-		cout << "The Preorder traversal of the tree " << endl;
-		Preorder(T);
-
-		// print it out in PostOrder
-		cout << "The postorder traversal of the tree " << endl;
-		Postorder(T);
-
-		// print Item Sum
-		cout << "The Sum of Items in tree " << endl;
-		cout << "The Sum is: ";
-		SumTree(T, treecounter);
-		cout << treecounter << endl;
-*/
+		else
+			ReduceTree(T);
 	}
-		//close input file
-		closeing(infile);
+	//close input file
+	closeing(infile);
 
 	system("pause");
 
@@ -295,149 +250,8 @@ void Inorder(BTree  & T)
 		cout << "Tree contains: " << endl;
 		DoInOrder(T);
 	}
-
-	cout << endl << endl;
 }
 
-//DEFINE ADDITIONAL NON-MEMBER FUNCTIONS HERE
-
-void Preorder(BTree  & T)
-{
-	T.ShiftToRoot();
-
-	if (T.IsEmpty())
-		cout << "Tree is empty" << endl;
-	else
-	{
-		cout << "Tree contains: " << endl;
-		DoPreorder(T);
-	}
-
-	cout << endl << endl;
-}
-
-//called by PreOrder
-void DoPreorder(BTree & T)
-{
-	ItemType Item;
-
-	//2 base cases: empty tree or subtree is a leaf
-	if (!T.IsEmpty())
-	{
-		//display root of subtree
-		T.RetrieveItem(Item);
-		cout << Item << "  ";
-
-		//not a leaf, has a left child, traverse left subtree
-		//of subtree in PreOrder
-		if (T.HasLeftChild())
-		{
-			T.ShiftLeft();
-			DoPreorder(T);
-			T.ShiftUp();
-		}
-
-		//not a leaf, has a right child, traverse right subtree of
-		//subtree in PreOrder
-		if (T.HasRightChild())
-		{
-			T.ShiftRight();
-			DoPreorder(T);
-			T.ShiftUp();
-		}
-	}
-}
-
-void Postorder(BTree  & T)
-{
-	T.ShiftToRoot();
-
-	if (T.IsEmpty())
-		cout << "Tree is empty" << endl;
-	else
-	{
-		cout << "Tree contains: " << endl;
-		DoPostorder(T);
-	}
-
-	cout << endl << endl;
-}
-
-//called by Postorder
-void DoPostorder(BTree  & T)
-{
-	ItemType Item;
-
-	//2 base cases: empty tree or subtree is a leaf
-	if (!T.IsEmpty())
-	{
-		//not a leaf, has a left child, traverse left subtree
-		//of subtree in InOrder
-		if (T.HasLeftChild())
-		{
-			T.ShiftLeft();
-			DoPostorder(T);
-			T.ShiftUp();
-		}
-
-		//not a leaf, has a right child, traverse right subtree
-		//of subtree in InOrder
-		if (T.HasRightChild())
-		{
-			T.ShiftRight();
-			DoPostorder(T);
-			T.ShiftUp();
-		}
-
-		//display root of subtree
-		T.RetrieveItem(Item);
-		cout << Item << "  ";
-	}
-}
-
-void SumTree(BTree  & T, int & counter)
-{
-	T.ShiftToRoot();
-
-	if (T.IsEmpty())
-		cout << "Tree is empty" << endl;
-	else
-	{
-		DoSumTree(T, counter);
-	}
-}
-
-//called by SumTree
-void DoSumTree(BTree  & T, int & acounter)
-{
-	ItemType Item;
-
-	//2 base cases: empty tree or subtree is a leaf
-	if (!T.IsEmpty())
-	{
-		//not a leaf, has a left child, traverse left subtree of subtree
-		//in InOrder
-		if (T.HasLeftChild())
-		{
-			T.ShiftLeft();
-			DoSumTree(T, acounter);
-			T.ShiftUp();
-		}
-
-		//display root of subtree
-		T.RetrieveItem(Item);
-		acounter += Item;
-
-		//not a leaf, has a right child, traverse right subtree of subtree
-		//in InOrder
-		if (T.HasRightChild())
-		{
-			T.ShiftRight();
-			DoSumTree(T, acounter);
-			T.ShiftUp();
-		}
-	}
-}
 
 int ord(char item)
 {
@@ -546,7 +360,8 @@ int EvalTree(BTree& T)
 
 	equation.answer = DoEvalTree(T);
 
-	cout << "ANSWER IS:" << equation.answer <<endl;
+	Inorder(T);
+	cout <<" = "<< equation.answer << endl;
 	return equation.answer;
 }
 
@@ -555,15 +370,15 @@ int DoEvalTree(BTree& T)
 	ItemType Item;
 	EquationType equation;
 
-	//if its a leaf node
-	if (T.HasNoChildren())
-	{
-		T.RetrieveItem(Item);
-		return ord(Item);
-	}
+		//if its a leaf node
+		if (T.HasNoChildren())
+		{
+			T.RetrieveItem(Item);
+			return ord(Item);
+		}
 
-	else
-	{
+		else
+		{
 			T.ShiftLeft();
 			equation.term1 = DoEvalTree(T);
 			//go to subroot
@@ -572,34 +387,181 @@ int DoEvalTree(BTree& T)
 			T.ShiftRight();
 			equation.term2 = DoEvalTree(T);
 			//go to subroot
-			T.ShiftUp();		
-	}
-
-	T.RetrieveItem(Item);
-
-	//if its an opperator return false
-	if ((Item == '+') || (Item == '-') ||
-		(Item == '*') || (Item == '/'))
-	{
-		equation.Opert = Item;
-
-		//perform arithmatic and store answer
-		switch (equation.Opert)
-		{
-		case '+':
-			return equation.term1 + equation.term2;
-			break;
-		case '-':
-			return equation.term1 - equation.term2;
-			break;
-		case '/':
-			return equation.term1 / equation.term2;
-			break;
-		case '*':
-			return equation.term1 * equation.term2;
-			break;
-		default:
-			break;
+			T.ShiftUp();
 		}
+
+		T.RetrieveItem(Item);
+
+		//if its an opperator return false
+		if ((Item == '+') || (Item == '-') ||
+			(Item == '*') || (Item == '/'))
+		{
+			equation.Opert = Item;
+
+			//perform arithmatic and store answer
+			switch (equation.Opert)
+			{
+			case '+':
+				return equation.term1 + equation.term2;
+				break;
+			case '-':
+				return equation.term1 - equation.term2;
+				break;
+			case '/':
+				return equation.term1 / equation.term2;
+				break;
+			case '*':
+				return equation.term1 * equation.term2;
+				break;
+			default:
+				break;
+			}
+		}
+}
+
+void ReduceTree(BTree &T)
+{
+	T.ShiftToRoot();
+
+	DoReduceTree(T);
+	
+	Inorder(T);
+	cout << endl;
+}
+
+void DoReduceTree(BTree &T)
+{
+	ItemType Item;
+	ReductionType expr;
+
+	if (!T.IsEmpty())
+	{
+		//if opperator w/ left child
+		if (T.HasLeftChild())
+		{
+			T.ShiftLeft();
+			T.RetrieveItem(Item);
+			if ((Item != '+') && (Item != '-') && (Item != '*')
+				&& (Item != '/'))
+			{
+				expr.term1 = Item;
+
+				expr.flag = true;
+				T.ShiftUp();
+			}
+
+			else
+			{
+				//keep going until opperand
+				expr.flag = false;
+				DoReduceTree(T);
+				T.ShiftUp();
+			}
+		}
+
+
+		if (T.HasRightChild())
+		{
+			T.ShiftRight();
+			T.RetrieveItem(Item);
+			//if operand
+			if ((Item != '+') && (Item != '-') && (Item != '*')
+				&& (Item != '/'))
+			{
+				//store it in equation and flag ready
+				expr.term2 = Item;
+				expr.flag = true;
+				T.ShiftUp();
+			}
+
+			else
+			{
+				//store it in equation and flag ready
+				expr.flag = false;
+				DoReduceTree(T);
+				T.ShiftUp();
+			}
+		}
+
+		T.RetrieveItem(Item);
+		//if its a constant
+		if ((Item == '+') || (Item == '-') || (Item == '*') || (Item == '/') && (expr.flag))
+		{
+			switch (Item)
+			{
+				//Simplify addition by 0
+			case '+':
+				if (expr.term1 != 0 && expr.term2 != 0)
+				{
+					if (expr.term1 == '0')
+					{
+						T.ChangeItem(expr.term2);
+						T.RemoveLeft();
+						T.RemoveRight();
+					}
+
+					else if (expr.term2 == '0')
+					{
+						T.ChangeItem(expr.term1);
+						T.RemoveLeft();
+						T.RemoveRight();
+					}
+				}
+
+				break;
+				//Simplify subtraction by 0
+			case '-':
+				if (expr.term1 == '0')
+				{
+					T.ChangeItem(expr.term2);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				else if (expr.term2 == '0')
+				{
+					T.ChangeItem(expr.term1);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				break;
+				//Simplify multiplication by 0 and 1
+			case'*':
+				if ((expr.term1 == '0') || (expr.term2 == '0'))
+				{
+					T.ChangeItem('0');
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				else if (expr.term1 == '1')
+				{
+					T.ChangeItem(expr.term2);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				else if (expr.term2 == '1')
+				{
+					T.ChangeItem(expr.term1);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+				break;
+				//Simplify division by 0 and 1
+			case '/':
+				if (expr.term2 == '0')
+				{
+					cout << endl << "Division by zero." << endl;
+				}
+
+				if (expr.term2 == '1')
+				{
+					T.ChangeItem(expr.term1);
+					T.RemoveLeft();
+					T.RemoveRight();
+				}
+			default:
+				break;
+			}
+		}
+			T.ShiftUp();
 	}
 }
