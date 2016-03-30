@@ -1,3 +1,9 @@
+//  Christian Norfleet
+//  Binary Expression Tree
+//  BTree.h
+//  This file contains necessary files for Tree creation and traversal
+
+
 #pragma once
 
 #include <cstdlib>
@@ -9,6 +15,10 @@ using namespace std;
 //children.  The cursor can reference any item in the tree
 
 typedef char ItemType;
+enum Color
+{
+	RED, BLACK
+};
 
 class BTree
 {
@@ -18,6 +28,7 @@ class BTree
 		TreeNode * left;
 		TreeNode * right;
 		TreeNode * parent;
+		Color nodecolor;
 	};
 
 public:

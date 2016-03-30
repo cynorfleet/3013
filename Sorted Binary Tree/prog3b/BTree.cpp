@@ -1,3 +1,8 @@
+//  Christian Norfleet
+//  Binary Expression Tree
+//  BTree.cpp
+//  This file contains necessary files for Tree creation and traversal
+
 #include "BTree.h"
 using namespace std;
 
