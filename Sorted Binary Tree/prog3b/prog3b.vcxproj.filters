@@ -18,7 +18,7 @@
     <ClCompile Include="BTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="prog3a2.cpp">
+    <ClCompile Include="prog3b2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,9 +32,6 @@
       <Filter>Source Files</Filter>
     </Text>
     <Text Include="prog3b2.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="prog3a2.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>

@@ -119,13 +119,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BTree.cpp" />
-    <ClCompile Include="prog3a2.cpp" />
+    <ClCompile Include="prog3b2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BTree.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="prog3a2.txt" />
     <Text Include="prog3b1.txt" />
     <Text Include="prog3b2.txt" />
   </ItemGroup>
