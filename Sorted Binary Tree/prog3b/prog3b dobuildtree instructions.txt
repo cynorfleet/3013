@@ -1,0 +1,52 @@
+void DoBuildTree(BTree& T, ifstrem& infile, char dir);
+{
+ItemType item;
+//GET ONE CHAR
+item=infile.get();
+
+//CHECK EOF AND Endofline (thendone)
+if((!infile.eof()) && (item!= '\n')) //if extends to end of program
+{
+	//CONSUME SPACES UNTIL I GET SPACE
+	while((item == ' ') && (!infile.eof()))
+		{
+			item = infile.get();
+		}
+	//BUILD ROOT OF SUBTREE
+	if(T.isEmpty())
+		T.CreateFirstNode(item);
+
+	else if (dir =='L') //means building left subtree so need to add left child
+	{
+	T.addLeft(item);
+	T.ShiftLeft();
+	}
+
+	else //means its 'R' (right)
+	{
+	T.addRight(item);
+	T.shiftRight();
+	}
+
+	//CHECK IF ITEM IS OPERATOR
+	if((item=='+') || (item=='-')||(item=='/')||(item=='*'))
+		{
+			//if i just read any of these im building left subtree
+			DoBuildTree(T, infile, 'L');
+		}
+	else
+		{
+		//RETREAT UNTIL I GET TO A NODE W/ EMPTY RIGHT SUBTREE
+		if(T.HasParent())
+			T.ShiftUp();
+			
+			while (T.hasPArent() && T.hasRightChild())
+			T.ShiftUP();
+		
+		DoBuildTree(T, infile, 'R');
+		} //end else
+		//GETBACK TO ROOT OF SUBTREE
+			if(T.hasPArent())
+				T.ShiftUP();
+	}
+}

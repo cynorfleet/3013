@@ -105,8 +105,8 @@ int main()
 	//enters the players' entry into log
 	InputTurn(gameconfig, player_1, player_2);
 
-	//Print player entries
-	PrintEntries(gameconfig, player_1, player_2);
+	//Print player 1 moves
+	//Print plaer 2 moves
 
 	//Calculate winner
 
@@ -114,7 +114,6 @@ int main()
 	Closing();
 
 	//Clear Tree
-	T.ClearTree();
 
 	system("pause");
 
