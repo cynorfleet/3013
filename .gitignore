@@ -3,3 +3,9 @@
 ################################################################################
 
 /RBTree
+/Sorted Binary Tree/prog3b
+/Sorted Binary Tree
+/Red Black Tree Game
+*.suo
+DiGraph/DiGraph/DiGraph.vcxproj.filters
+*.vcxproj
