@@ -45,9 +45,9 @@ void OpenFiles(ifstream & infile, ofstream & outfile);
 // PostCondition :
 // Error Condition :
 //******************************************************************************
-void ReadFile(ifstream & infile, specifcations & temp, DiGraph);
+void ReadFile(ifstream & infile, specifcations & temp, DiGraph &);
 
-void PrintList(ofstream & outfile, DiGraph);
+void PrintList(ofstream & outfile, DiGraph &);
 
 int main()
 // PreCondition : none
@@ -68,6 +68,8 @@ int main()
 	OpenFiles(infile, outfile);
 	// read data file into G
 	ReadFile(infile, vertex, graph);
+	//crop Vector to # of vertices
+	graph.ResizeGraph(vertex.size);
 
 	//5A find complement
 
@@ -85,6 +87,7 @@ int main()
 
 	//5A and 5B close files
 
+	system("pause");
 	return 0;
 }
 
@@ -104,7 +107,7 @@ void OpenFiles(ifstream & infile, ofstream & outfile)
 	outfile.open(outfileName);
 }
 
-void ReadFile(ifstream & infile, specifcations & temp, DiGraph graph)
+void ReadFile(ifstream & infile, specifcations & temp, DiGraph & graph)
 {
 	//read in list size
 	infile >> temp.size;
@@ -119,7 +122,7 @@ void ReadFile(ifstream & infile, specifcations & temp, DiGraph graph)
 	} while (!(infile.eof()));
 }
 
-void PrintList(ofstream & outfile, DiGraph graph)
+void PrintList(ofstream & outfile, DiGraph & graph)
 {
 	string output = "";
 

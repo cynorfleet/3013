@@ -57,18 +57,22 @@ void DiGraph::AddEdge(int X, int Y)
 //                  a vertex in Graph or if X and Y are not distinct or if
 //                  edge (X,Y) is already in Graph
 {
-	//If there is a vertex at X
+	/*
+	//If there is not a vertex at X
 	if ((adjList.at(X).isEmpty()) || (adjList.at(Y).isEmpty()))
 		cout << "\nERROR: CANNOT ADD EDGE. VERTEX DOES NOT EXIST\n";
+	*/
+
 	//Check to see if in array already
-	else if (adjList.at(X).searchitem(Y))
+
+	/*else*/ if (adjList.at(X).searchitem(Y))
 		cout << "\nERROR: CANNOT ADD EDGE. ALREADY IN GRAPH\n";
 	//Check if not distinct
 	else if (X == Y)
 		cout << "\nERROR: CANNOT ADD EDGE. X AND Y MUST BE DISTINCT\n";
 	//If valid, add edge to graph
 	else
-		adjList[X].insertitem(Y);
+		adjList.at(X).insertitem(Y);
 }
 
 void DiGraph::RemoveEdge(int X, int Y)
@@ -125,14 +129,12 @@ int DiGraph::GetNumberOfVertices() const
 
 void DiGraph::ToString(string & output)
 {
-	//crop Vector to # of vertices
-	adjList.shrink_to_fit();
-
 	int temp = 0;
 
 	for (size_t i = 0; i < adjList.size(); i++)
 	{
 		output += "From vertex " + to_string(i) + " to:\t";
+		adjList[i].resetList();
 		do
 		{
 			//add edges
@@ -141,4 +143,9 @@ void DiGraph::ToString(string & output)
 		} while (!adjList[i].atEnd());
 		output += "\n";
 	}
+}
+
+void DiGraph::ResizeGraph(int n)
+{
+	adjList.resize(n);
 }

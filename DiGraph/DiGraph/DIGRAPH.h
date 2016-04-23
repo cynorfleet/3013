@@ -69,6 +69,7 @@ public:
 	// Checks : none
 
 	void ToString(string & output);
+	void ResizeGraph(int n);
 
 private:
 	//define vector of vectors
