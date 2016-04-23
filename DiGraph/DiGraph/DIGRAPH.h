@@ -68,6 +68,8 @@ public:
 	//                 vertices in Graph
 	// Checks : none
 
+	void ToString(string & output);
+
 private:
 	//define vector of vectors
 	vector <SortedList> adjList;

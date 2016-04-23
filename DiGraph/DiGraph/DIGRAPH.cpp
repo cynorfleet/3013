@@ -7,6 +7,7 @@ DATE :
 ---------------------------------------------------------------------------*/
 #include "digraph.H"
 #include <iostream>
+#include <string>
 using namespace std;
 
 DiGraph::DiGraph(int n)
@@ -121,3 +122,23 @@ int DiGraph::GetNumberOfVertices() const
 {
 	return adjList.size();
 }    // GetNumberOfVertices
+
+void DiGraph::ToString(string & output)
+{
+	//crop Vector to # of vertices
+	adjList.shrink_to_fit();
+
+	int temp = 0;
+
+	for (size_t i = 0; i < adjList.size(); i++)
+	{
+		output += "From vertex " + to_string(i) + " to:\t";
+		do
+		{
+			//add edges
+			adjList[i].retrieveNextitem(temp);
+			output += temp + "\t";
+		} while (!adjList[i].atEnd());
+		output += "\n";
+	}
+}
