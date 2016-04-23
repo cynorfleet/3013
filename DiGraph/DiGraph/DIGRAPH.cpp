@@ -137,9 +137,8 @@ void DiGraph::ToString(string & output)
 		adjList[i].resetList();
 		do
 		{
-			//add edges
 			adjList[i].retrieveNextitem(temp);
-			output += temp + "\t";
+			output += to_string(temp) + "\t";
 		} while (!adjList[i].atEnd());
 		output += "\n";
 	}
