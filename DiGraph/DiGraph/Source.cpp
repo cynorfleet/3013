@@ -38,16 +38,16 @@ struct specifcations
 // PostCondition :
 // Error Condition :
 //******************************************************************************
-void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp);
+void OpenFiles(ifstream &, ofstream &, specifcations &);
 
 //******************************************************************************
 // PreCondition	:
 // PostCondition :
 // Error Condition :
 //******************************************************************************
-void ReadFile(ifstream & infile, specifcations & temp, DiGraph &);
+void ReadFile(ifstream &, specifcations &, DiGraph &);
 
-void PrintList(ofstream & outfile, DiGraph &);
+void PrintList(ofstream &, bool, DiGraph &);
 
 int main()
 // PreCondition : none
@@ -62,27 +62,32 @@ int main()
 	ifstream infile;
 	ofstream outfile;
 	specifcations vertex;
-	DiGraph graph;
+	bool wantcomplmt = false;
+	DiGraph graph, graphcomp;
 
 	// open input & output files
 	OpenFiles(infile, outfile, vertex);
 
 	//crop Vector to # of vertices
 	graph.ResizeGraph(vertex.size);
+	graphcomp.ResizeGraph(vertex.size);
 
-	//keep reading in vertices until end of file
+	//keep reading in vertices into graph until end of file
 	do
 	{
-		// read data file into G
+		// read data file into graph
 		ReadFile(infile, vertex, graph);
 		vertex.edge.first = NULL;
 		vertex.edge.second = NULL;
 	} while (!(infile.eof()));
 
 	//5A find complement
+	graph.Complement(graphcomp);
 
 	//print graph and print complement graph
-	PrintList(outfile, graph);
+	PrintList(outfile, wantcomplmt, graph);
+	wantcomplmt = true;
+	PrintList(outfile, wantcomplmt, graphcomp);
 
 	// 5B find, and print to outfile, prerequisites for selected courses
 
@@ -126,11 +131,19 @@ void ReadFile(ifstream & infile, specifcations & temp, DiGraph & graph)
 	graph.AddEdge(temp.edge.first, temp.edge.second);
 }
 
-void PrintList(ofstream & outfile, DiGraph & graph)
+void PrintList(ofstream & outfile, bool whichone, DiGraph & g)
 {
 	string output = "";
+	cout << "\nThere are " << g.GetNumberOfVertices() << " verticies in the Graph";
+
+	//if printing complement add appropriate string
+	if (whichone == true)
+		cout << "'s complement";
+
+	cout << ".\n";
+	cout << "The edges are as follows:\n";
 
 	//Grab data from graph object
-	graph.ToString(output);
+	g.ToString(output, g);
 	cout << output;
 }

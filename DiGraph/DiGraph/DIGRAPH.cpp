@@ -127,27 +127,47 @@ int DiGraph::GetNumberOfVertices() const
 	return adjList.size();
 }    // GetNumberOfVertices
 
-void DiGraph::ToString(string & output)
+void DiGraph::ToString(string & output, DiGraph & graph)
 {
 	int temp = 0;
 
-	for (size_t i = 0; i < adjList.size(); i++)
+	//go through specified graph's verticies
+	for (size_t i = 0; i < graph.adjList.size(); i++)
 	{
 		output += "From vertex " + to_string(i) + " to:\t";
-		adjList[i].resetList();
+		//reset list for next vertex
+		graph.adjList[i].resetList();
 		do
 		{
-			if (!adjList.at(i).isEmpty())
+			//If there is a edge store it in output
+			if (!graph.adjList.at(i).isEmpty())
 			{
-				adjList[i].retrieveNextitem(temp);
+				graph.adjList[i].retrieveNextitem(temp);
 				output += to_string(temp) + "\t";
 			}
-		} while (!adjList[i].atEnd());
+			//keep going until end of the list
+		} while (!graph.adjList[i].atEnd());
 		output += "\n";
+	}
+}
+
+void DiGraph::Complement(DiGraph & GComp)
+{
+	//Traverse Verticies
+	for (int i = 0; i < GetNumberOfVertices(); i++)
+	{
+		//Traverse edges
+		for (int z = 0; z < GetNumberOfVertices(); z++)
+		{
+			//if edge is not found and not vertex is distinct add edge complement
+			if ((!adjList.at(i).searchitem(z)) && i != z)
+				GComp.AddEdge(i, z);
+		}
 	}
 }
 
 void DiGraph::ResizeGraph(int n)
 {
+	//Change size of adjecentcy list to represent # of verticies
 	adjList.resize(n);
 }
