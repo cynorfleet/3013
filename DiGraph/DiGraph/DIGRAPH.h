@@ -68,8 +68,9 @@ public:
 	//                 vertices in Graph
 	// Checks : none
 
-	void ToString(string & output);
+	void ToString(string & output, DiGraph & graph);
 	void ResizeGraph(int n);
+	void Complement(DiGraph & GComp);
 
 private:
 	//define vector of vectors
