@@ -137,8 +137,11 @@ void DiGraph::ToString(string & output)
 		adjList[i].resetList();
 		do
 		{
-			adjList[i].retrieveNextitem(temp);
-			output += to_string(temp) + "\t";
+			if (!adjList.at(i).isEmpty())
+			{
+				adjList[i].retrieveNextitem(temp);
+				output += to_string(temp) + "\t";
+			}
 		} while (!adjList[i].atEnd());
 		output += "\n";
 	}

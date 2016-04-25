@@ -15,21 +15,21 @@ using namespace std;
 struct specifcations
 {
 	int size;
-	pair <int, int> vertex;
+	pair <int, int> edge;
 
 	//Default Constructor
 	specifcations()
 	{
 		//initialize variables
 		size = 0;
-		vertex = make_pair(0, 0);
+		edge = make_pair(0, 0);
 	}
 
 	//Parameterized Constructor
 	specifcations(int x, int y)
 	{
 		size = 1;
-		vertex = make_pair(x, y);
+		edge = make_pair(x, y);
 	}
 };
 
@@ -38,7 +38,7 @@ struct specifcations
 // PostCondition :
 // Error Condition :
 //******************************************************************************
-void OpenFiles(ifstream & infile, ofstream & outfile);
+void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp);
 
 //******************************************************************************
 // PreCondition	:
@@ -65,11 +65,19 @@ int main()
 	DiGraph graph;
 
 	// open input & output files
-	OpenFiles(infile, outfile);
-	// read data file into G
-	ReadFile(infile, vertex, graph);
+	OpenFiles(infile, outfile, vertex);
+
 	//crop Vector to # of vertices
 	graph.ResizeGraph(vertex.size);
+
+	//keep reading in vertices until end of file
+	do
+	{
+		// read data file into G
+		ReadFile(infile, vertex, graph);
+		vertex.edge.first = NULL;
+		vertex.edge.second = NULL;
+	} while (!(infile.eof()));
 
 	//5A find complement
 
@@ -91,7 +99,7 @@ int main()
 	return 0;
 }
 
-void OpenFiles(ifstream & infile, ofstream & outfile)
+void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp)
 {
 	// VARIABLES
 	char infileName[40], outfileName[40];
@@ -105,21 +113,17 @@ void OpenFiles(ifstream & infile, ofstream & outfile)
 	cout << "Enter name of output file > ";
 	cin >> outfileName;
 	outfile.open(outfileName);
+
+	//read in list size
+	infile >> temp.size;
 }
 
 void ReadFile(ifstream & infile, specifcations & temp, DiGraph & graph)
 {
-	//read in list size
-	infile >> temp.size;
-
-	//keep reading in vertices until end of file
-	do
-	{
-		infile >> temp.vertex.first;
-		infile >> temp.vertex.second;
-		//add edge to graph
-		graph.AddEdge(temp.vertex.first, temp.vertex.second);
-	} while (!(infile.eof()));
+	infile >> temp.edge.first;
+	infile >> temp.edge.second;
+	//add edge to graph
+	graph.AddEdge(temp.edge.first, temp.edge.second);
 }
 
 void PrintList(ofstream & outfile, DiGraph & graph)
