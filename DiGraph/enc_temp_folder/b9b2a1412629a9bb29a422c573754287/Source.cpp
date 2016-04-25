@@ -49,8 +49,6 @@ void ReadFile(ifstream &, specifcations &, DiGraph &);
 
 void PrintList(ofstream &, bool, DiGraph &);
 
-void CloseFiles(ifstream &, ofstream &);
-
 int main()
 // PreCondition : none
 // PostCondition : The prerequisites for the courses in a program of study
@@ -77,9 +75,8 @@ int main()
 	//keep reading in vertices into graph until end of file
 	do
 	{
-		// read data into graph
+		// read data file into graph
 		ReadFile(infile, vertex, graph);
-		//reset temp edges for next vertex
 		vertex.edge.first = NULL;
 		vertex.edge.second = NULL;
 	} while (!(infile.eof()));
@@ -102,18 +99,13 @@ int main()
 	//do you want to go again?
 
 	//5A and 5B close files
-	infile.close();
-	outfile.close();
+
 	system("pause");
 	return 0;
 }
 
 void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp)
 {
-	//HEADING
-	cout << "This program will read infile and process verticies into graph.\n";
-	cout << "It will then output the edges found and their complements.\n\n";
-
 	// VARIABLES
 	char infileName[40], outfileName[40];
 
@@ -129,7 +121,6 @@ void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp)
 
 	//read in list size
 	infile >> temp.size;
-
 }
 
 void ReadFile(ifstream & infile, specifcations & temp, DiGraph & graph)
