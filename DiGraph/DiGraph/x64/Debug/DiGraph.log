@@ -1,3 +1,3 @@
-﻿  Source.cpp
-c:\users\kumin\github\3013\digraph\digraph\source.cpp(141): error C2451: conditional expression of type 'std::string' is illegal
-  c:\users\kumin\github\3013\digraph\digraph\source.cpp(141): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+﻿  DIGRAPH.cpp
+  DiGraph.vcxproj -> C:\Users\kumin\GitHub\3013\DiGraph\x64\Debug\DiGraph.exe
+  DiGraph.vcxproj -> C:\Users\kumin\GitHub\3013\DiGraph\x64\Debug\DiGraph.pdb (Partial PDB)
