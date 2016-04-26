@@ -117,7 +117,7 @@ int DiGraph::GetNumberOfVertices() const
 //                 vertices in Graph
 // ErrorCondition : none
 {
-	return int (adjList.size());
+	return int(adjList.size());
 }
 
 void DiGraph::ToString(string & output, DiGraph & graph)

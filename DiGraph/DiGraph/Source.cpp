@@ -46,7 +46,7 @@ void OpenFiles(ifstream &, ofstream &, specifcations &);
 void ReadFile(ifstream &, specifcations &, DiGraph &);
 
 // PreCondition	:	outfile and graph allocated
-// PostCondition :	will display graph w/ edges by default. Displays compl if true is 
+// PostCondition :	will display graph w/ edges by default. Displays compl if true is
 //					passed as additional argument
 // Error Condition :NONE
 void PrintList(ofstream &, DiGraph &, bool = false);
@@ -137,7 +137,6 @@ void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp)
 	} while (!infile);
 	//read in list size
 	infile >> temp.size;
-
 }
 
 void ReadFile(ifstream & infile, specifcations & temp, DiGraph & graph)
