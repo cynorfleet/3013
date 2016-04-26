@@ -1,3 +1,10 @@
+/*---------------------------------------------------------------------------
+UNIT NAME :   Source.cpp
+PURPOSE   :   Directed Graph / Adjacency Matrix Implementation
+WRITTEN FOR : Data Structures
+WRITTEN BY :  Christian Norfleet and Catherine Stringfellow
+DATE :		  4/25/2016
+---------------------------------------------------------------------------*/
 
 #include <iostream>
 #include <fstream>
@@ -28,23 +35,21 @@ struct specifcations
 	}
 };
 
-//******************************************************************************
-// PreCondition	:
-// PostCondition :
-// Error Condition :
-//******************************************************************************
+// PreCondition	:	in and outfiles initialized, specif container allocated
+// PostCondition :	in/outfiles are opened. # of vertices are read
+// Error Condition :if incorrect infile name reenter
 void OpenFiles(ifstream &, ofstream &, specifcations &);
 
-//******************************************************************************
-// PreCondition	:
-// PostCondition :
-// Error Condition :
-//******************************************************************************
+// PreCondition	:	in and outfile initialized, specif container and graph allocated
+// PostCondition :	graph is changed to include edges. Vector index rep verticies
+// Error Condition :NONE
 void ReadFile(ifstream &, specifcations &, DiGraph &);
 
+// PreCondition	:	outfile and graph allocated
+// PostCondition :	will display graph w/ edges by default. Displays compl if true is 
+//					passed as additional argument
+// Error Condition :NONE
 void PrintList(ofstream &, DiGraph &, bool = false);
-
-void CloseFiles(ifstream &, ofstream &);
 
 int main()
 // PreCondition : none
@@ -110,16 +115,26 @@ void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp)
 	// VARIABLES
 	char infileName[40], outfileName[40];
 
-	//get name of infile
-	cout << "Enter name of data file> ";
-	cin >> infileName;
-	infile.open(infileName);
+	do
+	{
+		//get name of infile
+		cout << "Enter name of data file> ";
+		cin >> infileName;
+		infile.open(infileName);
 
-	//get name of infile
-	cout << "Enter name of output file > ";
-	cin >> outfileName;
-	outfile.open(outfileName);
+		//get name of infile
+		cout << "Enter name of output file > ";
+		cin >> outfileName;
+		outfile.open(outfileName);
 
+		if (!infile)
+		{
+			cout << "\nERROR: Infile could not be opened.\n";
+			cout << "Please reenter correct infile name.\n";
+			system("pause");
+			cout << endl;
+		}
+	} while (!infile);
 	//read in list size
 	infile >> temp.size;
 

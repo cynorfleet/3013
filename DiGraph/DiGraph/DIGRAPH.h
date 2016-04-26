@@ -1,9 +1,9 @@
 /*---------------------------------------------------------------------------
-UNIT NAME : DiGraph.h
-PURPOSE   : Directed Graph Specification
-WRITTEN FOR : Data Structures
-WRITTEN BY : Catherine Stringfellow
-DATE : November 7, 1998
+UNIT NAME :		DiGraph.h
+PURPOSE   :		Directed Graph Specification
+WRITTEN FOR :	Data Structures
+WRITTEN BY :	Catherine Stringfellow & Christian Norfleet
+DATE :			November 7, 1998
 ---------------------------------------------------------------------------*/
 #pragma once
 
@@ -69,8 +69,19 @@ public:
 	// Checks : none
 
 	void ToString(string & output, DiGraph & graph);
+	// Requires : Graph is created, a string is initialized
+	// Ensures : Graph is unchanged, visual representation of graph sent to output
+	// Checks : NONE
+
 	void ResizeGraph(int n);
+	// Requires : Graph is created, list is initialized
+	// Ensures : Graph is unchanged, size of adjacency list = n
+	// Checks : NONE
+
 	void Complement(DiGraph & GComp);
+	// Requires : Graph is created, list is initialized
+	// Ensures : Graph is unchanged, calls AddEdge, othergraph = edges not in graph list
+	// Checks : NONE
 
 private:
 	//define vector of vectors

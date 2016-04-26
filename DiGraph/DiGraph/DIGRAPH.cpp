@@ -3,7 +3,7 @@ UNIT NAME :   DiGraph.cpp
 PURPOSE   :   Directed Graph / Adjacency Matrix Implementation
 WRITTEN FOR : Data Structures
 WRITTEN BY :  Christian Norfleet and Catherine Stringfellow
-DATE :
+DATE :		  4/25/2016
 ---------------------------------------------------------------------------*/
 #include "digraph.H"
 #include <iostream>
@@ -121,6 +121,9 @@ int DiGraph::GetNumberOfVertices() const
 }
 
 void DiGraph::ToString(string & output, DiGraph & graph)
+// Requires : Graph is created, a string is initialized
+// Ensures : Graph is unchanged, visual representation of graph sent to output
+// Checks : NONE
 {
 	int temp = 0;
 
@@ -145,6 +148,9 @@ void DiGraph::ToString(string & output, DiGraph & graph)
 }
 
 void DiGraph::Complement(DiGraph & GComp)
+// Requires : Graph is created, list is initialized
+// Ensures : Graph is unchanged, calls AddEdge, othergraph = edges not in graph list
+// Checks : NONE
 {
 	//Traverse Verticies
 	for (int i = 0; i < GetNumberOfVertices(); i++)
@@ -160,7 +166,10 @@ void DiGraph::Complement(DiGraph & GComp)
 }
 
 void DiGraph::ResizeGraph(int n)
+// Requires : Graph is created, list is initialized
+// Ensures : Graph is unchanged, size of adjacency list = n
+// Checks : NONE
 {
-	//Change size of adjecentcy list to represent # of verticies
+	//Change size of adjacency list to represent # of verticies
 	adjList.resize(n);
 }
