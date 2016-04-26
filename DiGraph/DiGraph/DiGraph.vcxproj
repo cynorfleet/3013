@@ -113,7 +113,6 @@
     <ClCompile Include="DIGRAPH.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="SortedList.cpp" />
-    <ClCompile Include="Source1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DIGRAPH.h" />

@@ -1,10 +1,4 @@
-//              UNIT NAME :
-//              PURPOSE   :
-//              WRITTEN FOR :
-//              WRITTEN BY :
-//              DATE :
 
-//#include <ctype>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,6 +6,7 @@
 #include "SortedList.h"
 using namespace std;
 
+//Temp container which holds # of vertices and edge values
 struct specifcations
 {
 	int size;
@@ -47,7 +42,7 @@ void OpenFiles(ifstream &, ofstream &, specifcations &);
 //******************************************************************************
 void ReadFile(ifstream &, specifcations &, DiGraph &);
 
-void PrintList(ofstream &, bool, DiGraph &);
+void PrintList(ofstream &, DiGraph &, bool = false);
 
 void CloseFiles(ifstream &, ofstream &);
 
@@ -64,7 +59,6 @@ int main()
 	ifstream infile;
 	ofstream outfile;
 	specifcations vertex;
-	bool wantcomplmt = false;
 	DiGraph graph, graphcomp;
 
 	// open input & output files
@@ -88,9 +82,8 @@ int main()
 	graph.Complement(graphcomp);
 
 	//print graph and print complement graph
-	PrintList(outfile, wantcomplmt, graph);
-	wantcomplmt = true;
-	PrintList(outfile, wantcomplmt, graphcomp);
+	PrintList(outfile, graph);
+	PrintList(outfile, graphcomp, true);
 
 	// 5B find, and print to outfile, prerequisites for selected courses
 
@@ -140,13 +133,13 @@ void ReadFile(ifstream & infile, specifcations & temp, DiGraph & graph)
 	graph.AddEdge(temp.edge.first, temp.edge.second);
 }
 
-void PrintList(ofstream & outfile, bool whichone, DiGraph & g)
+void PrintList(ofstream & outfile, DiGraph & g, bool complement)
 {
 	string output = "";
 	cout << "\nThere are " << g.GetNumberOfVertices() << " verticies in the Graph";
 
 	//if printing complement add appropriate string
-	if (whichone == true)
+	if (complement)
 		cout << "'s complement";
 
 	cout << ".\n";
