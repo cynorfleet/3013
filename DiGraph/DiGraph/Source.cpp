@@ -1,6 +1,6 @@
 /*---------------------------------------------------------------------------
 UNIT NAME :   Source.cpp
-PURPOSE   :   Directed Graph / Adjacency Matrix Implementation
+PURPOSE   :   Creates adjacency list for provided verticies with in/outdegree
 WRITTEN FOR : Data Structures
 WRITTEN BY :  Christian Norfleet and Catherine Stringfellow
 DATE :		  4/25/2016
@@ -13,7 +13,7 @@ DATE :		  4/25/2016
 #include "SortedList.h"
 using namespace std;
 
-//Temp container which holds # of vertices and edge values
+//Temp container that holds # of verticies and edge inputs
 struct specifcations
 {
 	int size;
@@ -23,14 +23,14 @@ struct specifcations
 	specifcations()
 	{
 		//initialize variables
-		size = 0;
-		edge = make_pair(0, 0);
+		size = NULL;
+		edge = make_pair(NULL, NULL);
 	}
 
 	//Parameterized Constructor
 	specifcations(int x, int y)
 	{
-		size = 1;
+		size = 0;
 		edge = make_pair(x, y);
 	}
 };
@@ -50,6 +50,11 @@ void ReadFile(ifstream &, specifcations &, DiGraph &);
 //					passed as additional argument
 // Error Condition :NONE
 void PrintList(ofstream &, DiGraph &, bool = false);
+
+// PreCondition	:	outfile and graph allocated
+// PostCondition :	will display in-degree and out-degree
+// Error Condition :NONE
+void PrintDegree(ofstream &, DiGraph &, bool = false);
 
 int main()
 // PreCondition : none
@@ -86,9 +91,11 @@ int main()
 	//5A find complement
 	graph.Complement(graphcomp);
 
-	//print graph and print complement graph
+	//print graph and print complement graph, and in/out degree of verticies
 	PrintList(outfile, graph);
 	PrintList(outfile, graphcomp, true);
+	PrintDegree(outfile, graph);
+	PrintDegree(outfile, graph, true);
 
 	// 5B find, and print to outfile, prerequisites for selected courses
 
@@ -127,15 +134,17 @@ void OpenFiles(ifstream & infile, ofstream & outfile, specifcations & temp)
 		cin >> outfileName;
 		outfile.open(outfileName);
 
+		//if invalid filename prompt reenter
 		if (!infile)
 		{
 			cout << "\nERROR: Infile could not be opened.\n";
 			cout << "Please reenter correct infile name.\n";
 			system("pause");
-			cout << endl;
+			outfile << endl;
 		}
+		//loop until valid filename
 	} while (!infile);
-	//read in list size
+	//read in list size and allocate memory for degree vector
 	infile >> temp.size;
 }
 
@@ -143,23 +152,48 @@ void ReadFile(ifstream & infile, specifcations & temp, DiGraph & graph)
 {
 	infile >> temp.edge.first;
 	infile >> temp.edge.second;
-	//add edge to graph
+	//add edge and degree to graph
 	graph.AddEdge(temp.edge.first, temp.edge.second);
 }
 
 void PrintList(ofstream & outfile, DiGraph & g, bool complement)
 {
 	string output = "";
-	cout << "\nThere are " << g.GetNumberOfVertices() << " verticies in the Graph";
+	outfile << "\nThere are " << g.GetNumberOfVertices() << " verticies in the Graph";
 
 	//if printing complement add appropriate string
 	if (complement)
-		cout << "'s complement";
+		outfile << "'s complement";
 
-	cout << ".\n";
-	cout << "The edges are as follows:\n";
+	outfile << ".\n";
+	outfile << "The edges are as follows:\n";
 
 	//Grab data from graph object
 	g.ToString(output, g);
-	cout << output;
+	outfile << output;
+}
+
+void PrintDegree(ofstream & outfile, DiGraph & g, bool outdegree)
+{
+	//if computing in-degree
+	if (!outdegree)
+	{
+		outfile << "\nThe in-degrees are as follows:";
+		//traverse the verticies while calling the in-degree function to find sum
+		//i will be used as an index counter
+		for (int i = 0; i < g.GetNumberOfVertices(); i++)
+			outfile << "\nFrom vertex " << i << " is:\t" << g.InDegree(g, i);
+		cout << "\n\n";
+	}
+
+	//if computing out-degree
+	else
+	{
+		outfile << "\n\nThe out-degrees are as follows: ";
+		//traverse the verticies while calling the out-degree function to find sum
+		//i will be used for matching edge list of all verticies
+		for (int i = 0; i < g.GetNumberOfVertices(); i++)
+			outfile << "\nFrom vertex " << i << " is:\t" << g.OutDegree(g, i);
+		outfile << "\n\n";
+	}
 }

@@ -152,7 +152,7 @@ void DiGraph::Complement(DiGraph & GComp)
 // Ensures : Graph is unchanged, calls AddEdge, othergraph = edges not in graph list
 // Checks : NONE
 {
-	//Traverse Verticies
+	//Traverse verticies
 	for (int i = 0; i < GetNumberOfVertices(); i++)
 	{
 		//Traverse edges
@@ -163,6 +163,59 @@ void DiGraph::Complement(DiGraph & GComp)
 				GComp.AddEdge(i, z);
 		}
 	}
+}
+
+int DiGraph::InDegree(DiGraph & g, int indexcounter)
+// Requires : Graph is created, list is initialized
+// Ensures : Graph is unchanged, adds  # verticies coming in to a vertex
+// Checks : NONE
+{
+	//initialize temp and #of in-degrees
+	int degreecounter = 0;
+	int temp;
+
+	//reset cursor to head of edge list
+	adjList.at(indexcounter).resetList();
+
+	//if there is an edge
+	if (!adjList.at(indexcounter).isEmpty())
+		do
+		{	//increment degree
+			degreecounter++;
+			//move to next item
+			adjList.at(indexcounter).retrieveNextitem(temp);
+			//keep going until end of edge list for vertex
+		} while (!adjList.at(indexcounter).atEnd());
+		return (degreecounter);
+}
+
+int DiGraph::OutDegree(DiGraph & g, int vertex)
+// Requires : Graph is created, list is initialized
+// Ensures : Graph is unchanged, adds verticies, vertex points to
+// Checks : NONE
+{
+	//"vertex", is the vertex being used for matching out-degree computation
+	//initialize temp and #of out-degrees
+	int degreecounter = 0;
+	int temp;
+	//traverse the vertex list
+	for (int i = 0; i < g.GetNumberOfVertices(); i++)
+	{
+		//reset cursor to head of edge list
+		adjList.at(i).resetList();
+		//if there is an edge
+		if (!adjList.at(i).isEmpty())
+			do
+			{
+				//store the edge in temp for comparison
+				adjList.at(i).retrieveNextitem(temp);
+				//if its the vertex we are looking for increment counter
+				if (temp == vertex)
+					degreecounter++;
+				//do this until we get to end of the edge list for vertex
+			} while (!adjList.at(i).atEnd());
+	}
+	return (degreecounter);
 }
 
 void DiGraph::ResizeGraph(int n)
