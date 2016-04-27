@@ -58,7 +58,7 @@ void DiGraph::AddEdge(int X, int Y)
 //                  edge (X,Y) is already in Graph
 {
 	//If X and Y are verticies in graph
-	if ((X >= 0) && (X < adjList.size()) && (Y >= 0) && (Y < adjList.size()))
+	if ((X >= 0) && (size_t(X) < adjList.size()) && (Y >= 0) && (size_t(Y) < adjList.size()))
 	{
 		//Check to see if in array already
 		if (adjList.at(X).searchitem(Y))
@@ -84,12 +84,12 @@ void DiGraph::RemoveEdge(int X, int Y)
 //            if edge (X,Y) is not in Graph
 {
 	//If X and Y are verticies in graph
-	if (!(X >= 0) || !(X < adjList.size()) || !(Y >= 0) || !(Y < adjList.size()))
+	if (!(X >= 0) || !(size_t(X) < adjList.size()) || !(Y >= 0) || !(size_t(Y) < adjList.size()))
 	{
 		cout << "\nERROR: CANNOT DELETE EDGE. X or Y not a vertex in Graph\n";
 	}
 	//If X and Y are verticies in graph
-	else if ((X >= 0) && (X < adjList.size()) && (Y >= 0) && (Y < adjList.size()))
+	else if ((X >= 0) && (size_t(X) < adjList.size()) && (Y >= 0) && (size_t(Y) < adjList.size()))
 	{
 		//Check if vertex has edges
 		if (adjList.at(X).isEmpty())

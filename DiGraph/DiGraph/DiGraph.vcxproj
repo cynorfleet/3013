@@ -121,6 +121,7 @@
   <ItemGroup>
     <Text Include="a.txt" />
     <Text Include="b.txt" />
+    <Text Include="courses.txt" />
     <Text Include="output.txt" />
     <Text Include="outputb.txt" />
   </ItemGroup>
