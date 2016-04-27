@@ -57,15 +57,22 @@ void DiGraph::AddEdge(int X, int Y)
 //                  a vertex in Graph or if X and Y are not distinct or if
 //                  edge (X,Y) is already in Graph
 {
-	//Check to see if in array already
-	if (adjList.at(X).searchitem(Y))
-		cout << "\nERROR: CANNOT ADD EDGE. ALREADY IN GRAPH\n";
-	//Check if not distinct
-	else if (X == Y)
-		cout << "\nERROR: CANNOT ADD EDGE. X AND Y MUST BE DISTINCT\n";
-	//If valid, add edge to graph
+	//If X and Y are verticies in graph
+	if ((X >= 0) && (X < adjList.size()) && (Y >= 0) && (Y < adjList.size()))
+	{
+		//Check to see if in array already
+		if (adjList.at(X).searchitem(Y))
+			cout << "\nERROR: CANNOT ADD EDGE. ALREADY IN GRAPH\n";
+		//Check if not distinct
+		else if (X == Y)
+			cout << "\nERROR: CANNOT ADD EDGE. X AND Y MUST BE DISTINCT\n";
+		//If valid, add edge to graph
+		else
+			adjList.at(X).insertitem(Y);
+	}
+	//If X and Y are NOT verticies in graph print error
 	else
-		adjList.at(X).insertitem(Y);
+		cout << "\nERROR: CANNOT ADD EDGE. X or Y not a vertex in Graph\n";
 }
 
 void DiGraph::RemoveEdge(int X, int Y)
@@ -76,16 +83,26 @@ void DiGraph::RemoveEdge(int X, int Y)
 //            a vertex in Graph or if X and Y are not distinct or
 //            if edge (X,Y) is not in Graph
 {
-	//If there is a vertex at X
-	if ((adjList.at(X).isEmpty()) || (adjList.at(Y).isEmpty()))
-		cout << "\nERROR: CANNOT DELETE EDGE. VERTEX DOES NOT EXIST\n";
-	//Check to see if in array already
-	else if (adjList.at(X).searchitem(Y))
-		cout << "\nERROR: CANNOT DELETE EDGE. ALREADY IN GRAPH\n";
-	//Check if not distinct
-	else if (X == Y)
-		cout << "\nERROR: CANNOT DELETE EDGE. X AND Y MUST BE DISTINCT\n";
-	//If valid, add edge to graph
+	//If X and Y are verticies in graph
+	if (!(X >= 0) || !(X < adjList.size()) || !(Y >= 0) || !(Y < adjList.size()))
+	{
+		cout << "\nERROR: CANNOT DELETE EDGE. X or Y not a vertex in Graph\n";
+	}
+	//If X and Y are verticies in graph
+	else if ((X >= 0) && (X < adjList.size()) && (Y >= 0) && (Y < adjList.size()))
+	{
+		//Check if vertex has edges
+		if (adjList.at(X).isEmpty())
+			cout << "\nERROR: CANNOT DELETE EDGE. EDGE DOES NOT EXIST\n";
+		//Check to see if in edge is in graph
+		else if (adjList.at(X).searchitem(Y))
+			cout << "\nERROR: CANNOT DELETE EDGE. EDGE NOT IN GRAPH\n";
+		//Check if not distinct
+		else if (X == Y)
+			cout << "\nERROR: CANNOT DELETE EDGE. X AND Y MUST BE DISTINCT\n";
+	}
+
+	//If valid, remove edge in graph
 	else
 		adjList.at(X).removeitem(Y);
 }

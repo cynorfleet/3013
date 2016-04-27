@@ -40,5 +40,11 @@
     <Text Include="output.txt">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="b.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="outputb.txt">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

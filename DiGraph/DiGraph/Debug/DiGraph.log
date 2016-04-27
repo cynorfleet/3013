@@ -1,3 +1,4 @@
-﻿  Source.cpp
+﻿  DIGRAPH.cpp
+c:\users\chris\github\3013\digraph\digraph\digraph.cpp(60): warning C4018: '<': signed/unsigned mismatch
   DiGraph.vcxproj -> C:\Users\Chris\GitHub\3013\DiGraph\Debug\DiGraph.exe
   DiGraph.vcxproj -> C:\Users\Chris\GitHub\3013\DiGraph\Debug\DiGraph.pdb (Partial PDB)

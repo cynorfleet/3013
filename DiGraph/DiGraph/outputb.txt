@@ -1,0 +1,31 @@
+
+There are 5 verticies in the Graph.
+The edges are as follows:
+From vertex 0 to:	1	2	
+From vertex 1 to:	2	
+From vertex 2 to:	
+From vertex 3 to:	2	
+From vertex 4 to:	2	
+
+There are 5 verticies in the Graph's complement.
+The edges are as follows:
+From vertex 0 to:	3	4	
+From vertex 1 to:	0	3	4	
+From vertex 2 to:	0	1	3	4	
+From vertex 3 to:	0	1	4	
+From vertex 4 to:	0	1	3	
+
+The in-degrees are as follows:
+From vertex 0 is:	2
+From vertex 1 is:	1
+From vertex 2 is:	0
+From vertex 3 is:	1
+From vertex 4 is:	1
+
+The out-degrees are as follows: 
+From vertex 0 is:	0
+From vertex 1 is:	1
+From vertex 2 is:	4
+From vertex 3 is:	0
+From vertex 4 is:	0
+
