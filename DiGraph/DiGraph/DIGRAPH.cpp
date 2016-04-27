@@ -162,12 +162,13 @@ void DiGraph::ToString(string & output, DiGraph & graph)
 	}
 }
 
-int DiGraph::InDegree(DiGraph & g, int indexcounter)
+int DiGraph::OutDegree(DiGraph & g, int indexcounter)
 // Requires :	Graph is created, list is initialized
 // Ensures :	Graph is unchanged, adds  # verticies coming in to a vertex
 // Checks :		NONE
 {
-	//initialize temp and #of in-degrees
+	//"vertex", is the vertex being used for matching out-degree computation
+	//initialize temp and #of out-degrees
 	int degreecounter = 0;
 	int temp;
 
@@ -186,13 +187,12 @@ int DiGraph::InDegree(DiGraph & g, int indexcounter)
 		return (degreecounter);
 }
 
-int DiGraph::OutDegree(DiGraph & g, int vertex)
+int DiGraph::InDegree(DiGraph & g, int vertex)
 // Requires :	Graph is created, list is initialized
 // Ensures :	Graph is unchanged, adds verticies, vertex points to
 // Checks :		NONE
 {
-	//"vertex", is the vertex being used for matching out-degree computation
-	//initialize temp and #of out-degrees
+	//initialize temp and #of in-degrees
 	int degreecounter = 0;
 	int temp;
 	//traverse the vertex list
