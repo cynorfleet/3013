@@ -37,16 +37,19 @@
     <Text Include="a.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="output.txt">
-      <Filter>Source Files</Filter>
-    </Text>
     <Text Include="b.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="outputb.txt">
+    <Text Include="courses.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="courses.txt">
+    <Text Include="output-courses.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="output-a.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="output-b.txt">
       <Filter>Source Files</Filter>
     </Text>
   </ItemGroup>
