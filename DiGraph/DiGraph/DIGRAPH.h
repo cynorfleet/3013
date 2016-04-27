@@ -76,17 +76,12 @@ public:
 	// Ensures :	Graph is unchanged, size of adjacency list = n
 	// Checks :		NONE
 
-	void Complement(DiGraph & GComp);
-	// Requires :	Graph is created, list is initialized
-	// Ensures :	Graph is unchanged, calls AddEdge, GComp = edges not in graph list
-	// Checks :		NONE
-
 	int InDegree(DiGraph & g, int indexcounter);
 	// Requires :	Graph is created, list is initialized
 	// Ensures :	Graph is unchanged, adds  # verticies coming in to a vertex
 	// Checks :		NONE
 
-	int DiGraph::OutDegree(DiGraph & g, int vertex);
+	int OutDegree(DiGraph & g, int vertex);
 	// Requires :	Graph is created, list is initialized
 	// Ensures :	Graph is unchanged, adds # of vertices, vertex points to
 	// Checks :		NONE

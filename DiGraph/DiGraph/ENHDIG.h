@@ -1,4 +1,3 @@
-
 /*
 UNIT NAME : EnhDiGraph.h
 PURPOSE   : Enhanced DiGraph Operations Specifications
@@ -12,26 +11,31 @@ DATE : November 7, 1998
 #include <fstream>
 #include <iostream>
 #include "DiGraph.h"
-#include "Stack.h"
+
 using namespace std;
 
 typedef bool ControlData[MAXVERTICES];
 
 // operations
 
-void ReadDiGraph(DiGraph & G, ifstream & InFile, ofstream & OutFile);
+void ReadDiGraph(ifstream & InFile, ofstream & OutFile, DiGraph & G);
 // PreCondition : G is created.  The first line of InFile contains the
 //                number of vertices in the graph,, the following lines
 //                are the edges (vertex pairs) of the Graph
 // PostCondition : Graph G is the DiGraph specified by InFile
 // ErrorCondition : Error if the size is invalid, or if there are invalid edges
 
-void PrintDiGraph(DiGraph & G, ofstream & OutFile);
+void PrintDiGraph(ofstream &, DiGraph &, bool = false);
 // PreCondition  : G is created
 // PostCondition : outfile's first line is the size of the graph, the
 //                 succeeding lines contain a list of vertices and the
 //                 vertices to which they are adjacent
 // ErrorCondition : none
+
+void PrintDegree(ofstream &, DiGraph &, bool = false);
+// PreCondition	:	outfile and graph allocated
+// PostCondition :	will display in-degree and out-degree
+// Error Condition :NONE
 
 void Complement(DiGraph & G, DiGraph & GComp);
 // PreCondition : G and GComp are created
@@ -40,6 +44,7 @@ void Complement(DiGraph & G, DiGraph & GComp);
 //                 connected in G
 // ErrorCondition : none
 
+/*
 void FindLinearOrder(DiGraph & G, int Course, Stack & Prerequisites);
 // requires : G is created, Prerequisites is created, Course is a valid course
 // ensures : G = #G; Prerequisites contains the sequence of courses that have
@@ -51,4 +56,4 @@ void PrintLinearOrder(ofstream & OutFile, Stack & Prereq);
 //            and its top item is the "target course" for which the rest
 //            of the items on the stack are prerequisites
 // checks : none
-
+*/

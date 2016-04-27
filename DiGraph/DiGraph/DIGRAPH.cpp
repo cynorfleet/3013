@@ -115,13 +115,11 @@ bool DiGraph::IsEdge(int X, int Y)
 	//Check if X is a vertex
 	if (adjList.at(X).isEmpty())
 	{
-		cout << "\nERROR: (X) VERTEX DOES NOT EXIST\n";
 		return false;
 	}
 	//Check if Y is a vertex
 	else if (adjList.at(Y).isEmpty())
 	{
-		cout << "\nERROR: (Y) VERTEX DOES NOT EXIST\n";
 		return false;
 	}
 	else
@@ -161,24 +159,6 @@ void DiGraph::ToString(string & output, DiGraph & graph)
 			//keep going until end of the list
 		} while (!graph.adjList[i].atEnd());
 		output += "\n";
-	}
-}
-
-void DiGraph::Complement(DiGraph & GComp)
-// Requires : Graph is created, list is initialized
-// Ensures : Graph is unchanged, calls AddEdge, othergraph = edges not in graph list
-// Checks : NONE
-{
-	//Traverse verticies
-	for (int i = 0; i < GetNumberOfVertices(); i++)
-	{
-		//Traverse edges
-		for (int z = 0; z < GetNumberOfVertices(); z++)
-		{
-			//if edge is not found and vertex is distinct add edge-complement
-			if ((!adjList.at(i).searchitem(z)) && i != z)
-				GComp.AddEdge(i, z);
-		}
 	}
 }
 

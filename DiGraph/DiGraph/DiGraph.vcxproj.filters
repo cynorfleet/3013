@@ -24,12 +24,18 @@
     <ClCompile Include="SortedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ENHDIG.CPP">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DIGRAPH.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SortedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ENHDIG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -52,5 +58,10 @@
     <Text Include="output-b.txt">
       <Filter>Source Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="t">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
