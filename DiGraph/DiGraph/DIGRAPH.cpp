@@ -11,9 +11,9 @@ DATE :		  4/25/2016
 using namespace std;
 
 DiGraph::DiGraph(int n)
-// PreCondition :    Graph has not been created and 0 <= n < MaxVertices
-// PostCondition :   Graph is created and has n vertices and no edges
-// Error Condition : Error if n < 0 or n >+ MaxVertices
+// Requires :   Graph has not been created and 0 <= n < MaxVertices
+// Ensures :	Graph is created and has n vertices and no edges
+// Checks :		Error if n < 0 or n >+ MaxVertices
 {
 	//initialize vector
 	adjList.resize(n);
@@ -22,15 +22,15 @@ DiGraph::DiGraph(int n)
 DiGraph::DiGraph(DiGraph & other)
 // Requires : other has been created and initialized
 // Ensures :  other is copied to this graph
-// Checks :   none
+// Checks :   NONE
 {
 	adjList = other.adjList;
 }
 
 DiGraph::~DiGraph()
-// PreCondition :   Graph is created
-// PostCondition :  Graph is not created
-// ErrorCondition : none
+// Requires :   Graph is created
+// Ensures :	Graph is not created
+// Checks :		NONE
 {
 	//deletes edges. Use size_t for unsigned variable
 	for (size_t i = 0; i < adjList.size(); i++)
@@ -42,20 +42,20 @@ DiGraph::~DiGraph()
 }
 
 void DiGraph::SwapDiGraphs(DiGraph & other)
-// PreCondition :   this graph and other are created and initialized
-// PostCondition :  this = #other and other = #this
-// ErrorCondition : none
+// Requires :   this graph and other are created and initialized
+// Ensures :	this = #other and other = #this
+// Checks :		NONE
 {
 	adjList.swap(other.adjList);
 }
 
 void DiGraph::AddEdge(int X, int Y)
-// PreCondition :   Graph is created, X and Y are distinct vertices in Graph, and
-//				    edge (X,Y) not in Graph
-// PostCondition :  Graph is the same except an edge (X,Y) now exists
-// ErrorCondition : Error if X or Y is not
-//                  a vertex in Graph or if X and Y are not distinct or if
-//                  edge (X,Y) is already in Graph
+// Requires :   Graph is created, X and Y are distinct vertices in Graph, and
+//				edge (X,Y) not in Graph
+// Ensures :	Graph is the same except an edge (X,Y) now exists
+// Checks :		Error if X or Y is not
+//              a vertex in Graph or if X and Y are not distinct or if
+//              edge (X,Y) is already in Graph
 {
 	//If X and Y are verticies in graph
 	if ((X >= 0) && (size_t(X) < adjList.size()) && (Y >= 0) && (size_t(Y) < adjList.size()))
@@ -76,12 +76,12 @@ void DiGraph::AddEdge(int X, int Y)
 }
 
 void DiGraph::RemoveEdge(int X, int Y)
-// Requires : Graph is created, X and Y are distinct vertices in Graph and
-//            edge (X,Y) is in Graph
-// Ensures :  Graph is the same except edge (X,Y) no longer exists
-// Checks :   Error if X or Y is not
-//            a vertex in Graph or if X and Y are not distinct or
-//            if edge (X,Y) is not in Graph
+// Requires :	Graph is created, X and Y are distinct vertices in Graph and
+//				edge (X,Y) is in Graph
+// Ensures :	Graph is the same except edge (X,Y) no longer exists
+// Checks :		Error if X or Y is not
+//				a vertex in Graph or if X and Y are not distinct or
+//				if edge (X,Y) is not in Graph
 {
 	//If X and Y are verticies in graph
 	if (!(X >= 0) || !(size_t(X) < adjList.size()) || !(Y >= 0) || !(size_t(Y) < adjList.size()))
@@ -108,9 +108,9 @@ void DiGraph::RemoveEdge(int X, int Y)
 }
 
 bool DiGraph::IsEdge(int X, int Y)
-// PreCondition :   Graph is created, X and Y are vertices in Graph
-// PostCondition :  Graph is unchanged, IsEdge is true if (f edge (X,Y) is in Graph
-// ErrorCondition : X or Y is not a vertex in Graph
+// Requires :   Graph is created, X and Y are vertices in Graph
+// Ensures :	Graph is unchanged, IsEdge is true if (f edge (X,Y) is in Graph
+// Checks :		X or Y is not a vertex in Graph
 {
 	//Check if X is a vertex
 	if (adjList.at(X).isEmpty())
@@ -127,18 +127,18 @@ bool DiGraph::IsEdge(int X, int Y)
 }
 
 int DiGraph::GetNumberOfVertices() const
-// PreCondition :  Graph is created
-// PostCondition : Graph is unchanged, GetNumberofVertices is the number of
-//                 vertices in Graph
-// ErrorCondition : none
+// Requires :	Graph is created
+// Ensures :	Graph is unchanged, GetNumberofVertices is the number of
+//				vertices in Graph
+// Checks :		NONE
 {
 	return int(adjList.size());
 }
 
 void DiGraph::ToString(string & output, DiGraph & graph)
-// Requires : Graph is created, a string is initialized
-// Ensures : Graph is unchanged, visual representation of graph sent to output
-// Checks : NONE
+// Requires :	Graph is created, a string is initialized
+// Ensures :	Graph is unchanged, visual representation of graph sent to output
+// Checks :		NONE
 {
 	int temp = 0;
 
@@ -163,9 +163,9 @@ void DiGraph::ToString(string & output, DiGraph & graph)
 }
 
 int DiGraph::InDegree(DiGraph & g, int indexcounter)
-// Requires : Graph is created, list is initialized
-// Ensures : Graph is unchanged, adds  # verticies coming in to a vertex
-// Checks : NONE
+// Requires :	Graph is created, list is initialized
+// Ensures :	Graph is unchanged, adds  # verticies coming in to a vertex
+// Checks :		NONE
 {
 	//initialize temp and #of in-degrees
 	int degreecounter = 0;
@@ -187,9 +187,9 @@ int DiGraph::InDegree(DiGraph & g, int indexcounter)
 }
 
 int DiGraph::OutDegree(DiGraph & g, int vertex)
-// Requires : Graph is created, list is initialized
-// Ensures : Graph is unchanged, adds verticies, vertex points to
-// Checks : NONE
+// Requires :	Graph is created, list is initialized
+// Ensures :	Graph is unchanged, adds verticies, vertex points to
+// Checks :		NONE
 {
 	//"vertex", is the vertex being used for matching out-degree computation
 	//initialize temp and #of out-degrees
@@ -216,9 +216,9 @@ int DiGraph::OutDegree(DiGraph & g, int vertex)
 }
 
 void DiGraph::ResizeGraph(int n)
-// Requires : Graph is created, list is initialized
-// Ensures : Graph is unchanged, size of adjacency list = n
-// Checks : NONE
+// Requires :	Graph is created, list is initialized
+// Ensures :	Graph is unchanged, size of adjacency list = n
+// Checks :		NONE
 {
 	//Change size of adjacency list to represent # of verticies
 	adjList.resize(n);

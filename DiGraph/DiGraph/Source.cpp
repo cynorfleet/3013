@@ -19,14 +19,14 @@ using namespace std;
 // Error Condition :if incorrect infile name reenter
 void OpenFiles(ifstream &, ofstream &);
 
+// PreCondition :	NONE
+// PostCondition :	The prerequisites for the courses in a program of study
+//					are read from an input file, and the prerequisites for
+//					each course selected by the user are found and sent to
+//					the output file.  The process is repeated  until the user
+//					decides to stop looking for prerequisites
+// ErrorCondition : NONE
 int main()
-// PreCondition : none
-// PostCondition : The prerequisites for the courses in a program of study
-//                 are read from an input file, and the prerequisites for
-//                 each course selected by the user are found and sent to
-//                 the output file.  The process is repeated  until the user
-//                 decides to stop looking for prerequisites
-// ErrorCondition : none
 {
 	//VARIABLES
 	ifstream infile;
@@ -64,6 +64,9 @@ int main()
 	return 0;
 }
 
+// PreCondition	:	in and outfiles initialized, specif container allocated
+// PostCondition :	in/outfiles are opened. # of vertices are read
+// Error Condition :if incorrect infile name reenter
 void OpenFiles(ifstream & infile, ofstream & outfile)
 {
 	//HEADING

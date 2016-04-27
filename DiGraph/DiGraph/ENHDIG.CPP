@@ -1,9 +1,9 @@
 /*
-UNIT NAME : EnhDiGraph.cpp
-PURPOSE   : Enhanced DiGraph Operations Specifications
-WRITTEN FOR : CS 3013
-WRITTEN BY :
-DATE :
+UNIT NAME :		EnhDiGraph.cpp
+PURPOSE   :		Enhanced DiGraph Operations Specifications
+WRITTEN FOR :	CS 3013
+WRITTEN BY :	Christian Norfleet
+DATE :			4/25/2016
 */
 
 #include <cstdlib>

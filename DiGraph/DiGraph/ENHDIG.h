@@ -1,9 +1,9 @@
 /*
-UNIT NAME : EnhDiGraph.h
-PURPOSE   : Enhanced DiGraph Operations Specifications
-WRITTEN FOR : CS 345
-WRITTEN BY : Catherine Stringfellow
-DATE : November 7, 1998
+UNIT NAME :		EnhDiGraph.h
+PURPOSE   :		Enhanced DiGraph Operations Specifications
+WRITTEN FOR :	CS 345
+WRITTEN BY :	Christian Norfleet & Catherine Stringfellow
+DATE :			November 7, 1998
 */
 
 #pragma once
