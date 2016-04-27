@@ -1,3 +1,9 @@
+//Catherine Stringfellow
+//File : SortedList.h
+//Date: March 3, 2006
+//an unordered sequence of items
+//to used to store big numbers
+
 #include "SortedList.h"
 
 SortedList::SortedList()
