@@ -121,16 +121,9 @@
     <ClInclude Include="SortedList.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="a.txt" />
-    <Text Include="b.txt" />
     <Text Include="courses.txt" />
-    <Text Include="output-courses.txt" />
-    <Text Include="output-a.txt" />
-    <Text Include="output-b.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="t" />
-    <None Include="test" />
+    <Text Include="courses2.txt" />
+    <Text Include="outcourses.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

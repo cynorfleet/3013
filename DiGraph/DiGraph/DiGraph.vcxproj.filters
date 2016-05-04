@@ -40,31 +40,14 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="a.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="b.txt">
-      <Filter>Source Files</Filter>
-    </Text>
     <Text Include="courses.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="output-courses.txt">
+    <Text Include="outcourses.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="output-a.txt">
+    <Text Include="courses2.txt">
       <Filter>Source Files</Filter>
     </Text>
-    <Text Include="output-b.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="t">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="test">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

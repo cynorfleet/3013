@@ -1,0 +1,80 @@
+
+There are 10 vertices in the Graph.
+The edges are as follows:
+From vertex 0 to:	
+From vertex 1 to:	7	
+From vertex 2 to:	8	
+From vertex 3 to:	
+From vertex 4 to:	0	
+From vertex 5 to:	
+From vertex 6 to:	1	2	3	
+From vertex 7 to:	4	
+From vertex 8 to:	0	9	
+From vertex 9 to:	5	6	
+
+There are 10 vertices in the Graph's complement.
+The edges are as follows:
+From vertex 0 to:	1	2	3	4	5	6	7	8	9	
+From vertex 1 to:	0	2	3	4	5	6	8	9	
+From vertex 2 to:	0	1	3	4	5	6	7	9	
+From vertex 3 to:	0	1	2	4	5	6	7	8	9	
+From vertex 4 to:	0	1	2	3	5	6	7	8	9	
+From vertex 5 to:	0	1	2	3	4	6	7	8	9	
+From vertex 6 to:	0	3	4	5	7	8	9	
+From vertex 7 to:	0	1	2	3	5	6	8	9	
+From vertex 8 to:	0	1	2	3	4	5	6	7	
+From vertex 9 to:	0	1	2	3	4	5	7	8	
+
+
+The in-degrees are as follows: 
+From vertex 0 is:	2
+From vertex 1 is:	1
+From vertex 2 is:	1
+From vertex 3 is:	1
+From vertex 4 is:	1
+From vertex 5 is:	1
+From vertex 6 is:	1
+From vertex 7 is:	1
+From vertex 8 is:	1
+From vertex 9 is:	1
+
+
+
+The out-degrees are as follows:
+From vertex 0 is:	0
+From vertex 1 is:	1
+From vertex 2 is:	1
+From vertex 3 is:	0
+From vertex 4 is:	1
+From vertex 5 is:	0
+From vertex 6 is:	3
+From vertex 7 is:	1
+From vertex 8 is:	2
+From vertex 9 is:	2
+
+The sequence of courses to take before 6 is:
+4	7	1	9	8	2	
+in that order.
+
+The sequence of courses to take before 4 is:
+
+in that order.
+
+The sequence of courses to take before 7 is:
+4	
+in that order.
+
+The sequence of courses to take before 8 is:
+4	7	1	2	6	9	
+in that order.
+
+The sequence of courses to take before 9 is:
+4	7	1	8	2	6	
+in that order.
+
+The sequence of courses to take before 1 is:
+4	7	
+in that order.
+
+
+Good luck next semester.

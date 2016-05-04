@@ -6,10 +6,6 @@ WRITTEN BY :	Christian Norfleet
 DATE :			4/25/2016
 */
 
-#include <cstdlib>
-#include <iostream>
-#include <fstream>
-#include <string>
 #include "ENHDIG.h"
 using namespace std;
 
@@ -24,7 +20,7 @@ void ReadDiGraph(ifstream & InFile, ofstream & OutFile, DiGraph & G)
 	int X;
 	int Y;
 
-	//read in # of verticies and change size of graph to reflect verticies
+	//read in # of vertices and change size of graph to reflect vertices
 	InFile >> GSize;
 	G.ResizeGraph(GSize);
 
@@ -35,7 +31,7 @@ void ReadDiGraph(ifstream & InFile, ofstream & OutFile, DiGraph & G)
 
 		if ((X >= 0) && (X < G.GetNumberOfVertices()) && (Y >= 0) && (Y < G.GetNumberOfVertices()))
 		{
-			//If X and Y are verticies in graph
+			//If X and Y are vertices in graph
 			if ((X >= 0) && (X < G.GetNumberOfVertices()) && (Y >= 0) && (Y < G.GetNumberOfVertices()))
 			{
 				//Check to see if in array already
@@ -48,7 +44,7 @@ void ReadDiGraph(ifstream & InFile, ofstream & OutFile, DiGraph & G)
 				else
 					G.AddEdge(X, Y);
 			}
-			//If X and Y are NOT verticies in graph print error
+			//If X and Y are NOT vertices in graph print error
 			else
 				cout << "\nERROR: CANNOT ADD EDGE. X or Y not a vertex in Graph\n";
 		}
@@ -66,7 +62,7 @@ void PrintDiGraph(ofstream & OutFile, DiGraph & G, bool Compl)
 // ErrorCondition : none
 {
 	string output = "";
-	OutFile << "\nThere are " << G.GetNumberOfVertices() << " verticies in the Graph";
+	OutFile << "\nThere are " << G.GetNumberOfVertices() << " vertices in the Graph";
 
 	//if printing complement add appropriate string
 	if (Compl)
@@ -86,7 +82,7 @@ void PrintDegree(ofstream & outfile, DiGraph & g, bool outdegree)
 	if (outdegree)
 	{
 		outfile << "\nThe out-degrees are as follows:";
-		//traverse the verticies while calling the in-degree function to find sum
+		//traverse the vertices while calling the in-degree function to find sum
 		//i will be used as an index counter
 		for (int i = 0; i < g.GetNumberOfVertices(); i++)
 			outfile << "\nFrom vertex " << i << " is:\t" << g.OutDegree(g, i);
@@ -97,12 +93,13 @@ void PrintDegree(ofstream & outfile, DiGraph & g, bool outdegree)
 	else
 	{
 		outfile << "\n\nThe in-degrees are as follows: ";
-		//traverse the verticies while calling the out-degree function to find sum
-		//i will be used for matching edge list of all verticies
+		//traverse the vertices while calling the out-degree function to find sum
+		//i will be used for matching edge list of all vertices
 		for (int i = 0; i < g.GetNumberOfVertices(); i++)
 			outfile << "\nFrom vertex " << i << " is:\t" << g.InDegree(g, i);
 		outfile << "\n\n";
 	}
+	outfile << endl;
 }
 
 void Complement(DiGraph & G, DiGraph & GComp)
@@ -115,7 +112,7 @@ void Complement(DiGraph & G, DiGraph & GComp)
 	//crop GComp to # of vertices in G
 	GComp.ResizeGraph(G.GetNumberOfVertices());
 
-	//Traverse verticies
+	//Traverse vertices
 	for (int i = 0; i < G.GetNumberOfVertices(); i++)
 	{
 		//Traverse edges
@@ -127,35 +124,6 @@ void Complement(DiGraph & G, DiGraph & GComp)
 		}
 	}
 }
-
-
-void DoLinearOrder(DiGraph & G, int & Course, stack <int> & PreReq, ControlData & Visited)
-// requires : G is created, PreReq is created, Course is a valid course
-// ensures : G is unchanged; PreReq contains the sequence of courses that
-//           have to be taken before Course, with Course itself at the top
-// checks : Course is a valid course
-{
-  // start at vertex <course>, mark vertex <course> as visited
-  Visited[Course] = 1;
-
-	 // for (each vertex in G which has not already been visited
-  for (int z = 0; z < G.GetNumberOfVertices(); z++)
-  {
-	  //if (there is an edge between <course> and <i>, and it has not been visited
-	  
-	  if ((G.IsEdge(Course, z)) && (Visited[z] == 0))
-	  {
-		  Visited[z] = 1;
-		// recursively call  LinearOrder for (vertex <i>)
-		  DoLinearOrder(G, z, PreReq, Visited);
-	  }
-
-  }
-	  // with each return (backtrack) from a call to  LinearOrder,
-	  // add the vertex (for (which that call was made) to PreReq
-	  PreReq.emplace(Course);
- }
-
 
 void FindLinearOrder(DiGraph & G, int & Course, stack <int> & Prerequisites)
 // requires : G is created, Prerequisites is created, Course is a valid course
@@ -177,21 +145,48 @@ void FindLinearOrder(DiGraph & G, int & Course, stack <int> & Prerequisites)
 	DoLinearOrder(G, Course, Prerequisites, Visited);
 }
 
+void DoLinearOrder(DiGraph & G, int & Course, stack <int> & PreReq, ControlData & Visited)
+// requires : G is created, PreReq is created, Course is a valid course
+// ensures : G is unchanged; PreReq contains the sequence of courses that
+//           have to be taken before Course, with Course itself at the top
+// checks : Course is a valid course
+{
+	int i;
+	int z = G.GetNumberOfVertices();
+	// start at vertex <course>, mark vertex <course> as visited
+	Visited[Course] = 1;
 
+	// for (each vertex in G which has not already been visited
+	for (i = 0; i < z; i++)
+	{
+		//if (there is an edge between <course> and <i>, and it has not been visited
 
-void PrintLinearOrder (ofstream & OutFile, stack <int> & PreReq)
+		if ((G.IsEdge(Course, i)) && (Visited[i] == 0))
+		{
+			Visited[i] = 1;
+			// recursively call  LinearOrder for (vertex <i>)
+			DoLinearOrder(G, i, PreReq, Visited);
+		}
+	}
+	// with each return (backtrack) from a call to  LinearOrder,
+	// add the vertex (for (which that call was made) to PreReq
+	PreReq.emplace(Course);
+}
+
+void PrintLinearOrder(ofstream & OutFile, stack <int> & PreReq)
 // requires : OutFile has been opened for (output; PreReq is created,
 //            and its top item is the "target course" for (which the rest
 //            of the items on the stack are prerequisites
 // checks : none
-{	
+{
 	//create temp stack
 	stack <int> altstack;
 
-	OutFile << "\nThe sequence of course to take before ";
+	OutFile << "\nThe sequence of courses to take before ";
 	OutFile << PreReq.top();
 	PreReq.pop();
 	OutFile << " is:\n";
+
 	//While the main stack still has prerequisites
 	while (!PreReq.empty())
 	{
@@ -205,7 +200,6 @@ void PrintLinearOrder (ofstream & OutFile, stack <int> & PreReq)
 		//print contents of altstack
 		OutFile << altstack.top() << "\t";
 		altstack.pop();
-		OutFile << "\nin that order.";
 	}
-
+	OutFile << "\nin that order.\n";
 }

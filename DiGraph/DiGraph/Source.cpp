@@ -1,6 +1,6 @@
 /*---------------------------------------------------------------------------
 UNIT NAME :   Source.cpp
-PURPOSE   :   Creates adjacency list for provided verticies with in/outdegree
+PURPOSE   :   Creates adjacency list for provided vertices with in/out-degree
 WRITTEN FOR : Data Structures
 WRITTEN BY :  Christian Norfleet and Catherine Stringfellow
 DATE :		  4/25/2016
@@ -19,17 +19,21 @@ using namespace std;
 // Error Condition :if incorrect infile name reenter
 void OpenFiles(ifstream &, ofstream &);
 
-// PreCondition	:	Graph is created
-// PostCondition :	Will request user for course #, then verify it. Will change
-//					coursenum, otherwise graph is unchanged.
+// PreCondition	:	Graph is created int is initialized
+// PostCondition :	Will request user for course #, then verify it.
+//					Otherwise graph is unchanged.
 // Error Condition :if course number (< 0) or (> |vertices) print error
-bool GetCourse(DiGraph, int &);
+bool GetCourse(DiGraph &, int &);
 
-// PreCondition	:	Graph is created
-// PostCondition :	Will request user for course #, then verify it. Will change
-//					coursenum, otherwise graph is unchanged.
-// Error Condition :if course number (< 0) or (> |vertices) print error
+// PreCondition	:	NONE
+// PostCondition :	Will request user to process additional courses
+// Error Condition : print error if not y or Y or n or N
 bool GoAgain();
+
+// PreCondition	:	in/outfiles are initialized
+// PostCondition :	will close I/O files and print closing
+// Error Condition :NONE
+void Closing(ofstream & Outfile, ifstream & Infile);
 
 // PreCondition :	NONE
 // PostCondition :	The prerequisites for the courses in a program of study
@@ -46,7 +50,6 @@ int main()
 	DiGraph graph, graphcomp;
 	stack <int> req;
 	int course = NULL;
-	char choice = NULL;
 
 	// open input & output files
 	OpenFiles(infile, outfile);
@@ -57,7 +60,7 @@ int main()
 	//5A find complement
 	Complement(graph, graphcomp);
 
-	//print graph and print complement graph, and in/out degree of verticies
+	//print graph and print complement graph, and in/out degree of vertices
 	PrintDiGraph(outfile, graph);
 	PrintDiGraph(outfile, graphcomp, true);
 	PrintDegree(outfile, graph);
@@ -66,32 +69,29 @@ int main()
 	// 5B find, and print to outfile, prerequisites for selected courses
 
 	// while user selects courses to process
-	do
+	while (GoAgain())
 	{
 		//get valid course
-		if(GetCourse(graph, course));
+		if (GetCourse(graph, course))
 		{
 			//find linear order
 			FindLinearOrder(graph, course, req);
 			//print linear order
 			PrintLinearOrder(outfile, req);
 		}
-		//do you want to go again?
-	} while (GoAgain());
+	}
+	//do you want to go again?
+
 	//5A and 5B close files
-	infile.close();
-	outfile.close();
+	Closing(outfile, infile);
 	system("pause");
 	return 0;
 }
 
-// PreCondition	:	in and outfiles initialized, specif container allocated
-// PostCondition :	in/outfiles are opened. # of vertices are read
-// Error Condition :if incorrect infile name reenter
 void OpenFiles(ifstream & infile, ofstream & outfile)
 {
 	//HEADING
-	cout << "This program will read infile and process verticies into graph.\n";
+	cout << "This program will read infile and process vertices into graph.\n";
 	cout << "It will then output the edges found and their complements.\n\n";
 
 	// VARIABLES
@@ -121,32 +121,32 @@ void OpenFiles(ifstream & infile, ofstream & outfile)
 	} while (!infile);
 }
 
-bool GetCourse(DiGraph g, int & coursenum)
+bool GetCourse(DiGraph & g, int & coursenum)
 {
-		do
-		{
-			cout << "Please enter desired course number: ";
-			cin >> coursenum;
+	do
+	{
+		cout << "Please enter desired course number: ";
+		cin >> coursenum;
 
-			//if course number is outside range print error
-			if ((coursenum <= 0) && (coursenum <= g.GetNumberOfVertices()))
-				cout << "\nERROR: Invalid course number\n";
-			//loop until valid entry
-		} while ((coursenum <= 0) && (coursenum <= g.GetNumberOfVertices()));
-		if (g.OutDegree(g, coursenum) > 0)
-			return true;
-		else
-		{
-			cout << "\nThis course needs no prerequisisites.";
-			return false;
-		}
+		//if course number is outside range print error
+		if ((coursenum < 0) || (coursenum > g.GetNumberOfVertices()))
+			cout << "\nERROR: Invalid course number\n";
+		//loop until valid entry
+	} while ((coursenum < 0) || (coursenum > g.GetNumberOfVertices()));
+	if (g.OutDegree(g, coursenum) > 0)
+		return true;
+	else
+	{
+		cout << "\nThis course needs no prerequisites.";
+		return false;
+	}
 }
 
 bool GoAgain()
 {
 	char choice = NULL;
 	//Ask user to continue
-	do 
+	do
 	{
 		cout << "\nDo you want to process a course for prerequisites: (Y/N)";
 		cin >> choice;
@@ -161,4 +161,11 @@ bool GoAgain()
 		return true;
 	else
 		return false;
+}
+
+void Closing(ofstream & Outfile, ifstream & Infile)
+{
+	Outfile << "\n\nGood luck next semester.\n";
+	Infile.close();
+	Outfile.close();
 }

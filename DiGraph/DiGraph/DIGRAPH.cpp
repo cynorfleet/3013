@@ -57,7 +57,7 @@ void DiGraph::AddEdge(int X, int Y)
 //              a vertex in Graph or if X and Y are not distinct or if
 //              edge (X,Y) is already in Graph
 {
-	//If X and Y are verticies in graph
+	//If X and Y are vertices in graph
 	if ((X >= 0) && (size_t(X) < adjList.size()) && (Y >= 0) && (size_t(Y) < adjList.size()))
 	{
 		//Check to see if in array already
@@ -70,7 +70,7 @@ void DiGraph::AddEdge(int X, int Y)
 		else
 			adjList.at(X).insertitem(Y);
 	}
-	//If X and Y are NOT verticies in graph print error
+	//If X and Y are NOT vertices in graph print error
 	else
 		cout << "\nERROR: CANNOT ADD EDGE. X or Y not a vertex in Graph\n";
 }
@@ -83,12 +83,12 @@ void DiGraph::RemoveEdge(int X, int Y)
 //				a vertex in Graph or if X and Y are not distinct or
 //				if edge (X,Y) is not in Graph
 {
-	//If X and Y are verticies in graph
+	//If X and Y are vertices in graph
 	if (!(X >= 0) || !(size_t(X) < adjList.size()) || !(Y >= 0) || !(size_t(Y) < adjList.size()))
 	{
 		cout << "\nERROR: CANNOT DELETE EDGE. X or Y not a vertex in Graph\n";
 	}
-	//If X and Y are verticies in graph
+	//If X and Y are vertices in graph
 	else if ((X >= 0) && (size_t(X) < adjList.size()) && (Y >= 0) && (size_t(Y) < adjList.size()))
 	{
 		//Check if vertex has edges
@@ -164,7 +164,7 @@ void DiGraph::ToString(string & output, DiGraph & graph)
 
 int DiGraph::OutDegree(DiGraph & g, int indexcounter)
 // Requires :	Graph is created, list is initialized
-// Ensures :	Graph is unchanged, adds  # verticies coming in to a vertex
+// Ensures :	Graph is unchanged, adds  # vertices coming in to a vertex
 // Checks :		NONE
 {
 	//"vertex", is the vertex being used for matching out-degree computation
@@ -189,7 +189,7 @@ int DiGraph::OutDegree(DiGraph & g, int indexcounter)
 
 int DiGraph::InDegree(DiGraph & g, int vertex)
 // Requires :	Graph is created, list is initialized
-// Ensures :	Graph is unchanged, adds verticies, vertex points to
+// Ensures :	Graph is unchanged, adds vertices, vertex points to
 // Checks :		NONE
 {
 	//initialize temp and #of in-degrees
@@ -220,6 +220,6 @@ void DiGraph::ResizeGraph(int n)
 // Ensures :	Graph is unchanged, size of adjacency list = n
 // Checks :		NONE
 {
-	//Change size of adjacency list to represent # of verticies
+	//Change size of adjacency list to represent # of vertices
 	adjList.resize(n);
 }

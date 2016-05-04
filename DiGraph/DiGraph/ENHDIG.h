@@ -8,8 +8,10 @@ DATE :			November 7, 1998
 
 #pragma once
 
-#include <fstream>
+#include <cstdlib>
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <stack>
 #include "DiGraph.h"
 
@@ -45,7 +47,6 @@ void Complement(DiGraph & G, DiGraph & GComp);
 //                 connected in G
 // ErrorCondition : none
 
-
 void FindLinearOrder(DiGraph & G, int & Course, stack <int> & Prerequisites);
 // requires : G is created, Prerequisites is created, Course is a valid course
 // ensures : G = #G; Prerequisites contains the sequence of courses that have
@@ -57,7 +58,6 @@ void DoLinearOrder(DiGraph & G, int & Course, stack <int> & PreReq, ControlData 
 // ensures : G = #G; Prerequisites contains the sequence of courses that have
 //           to be taken before Course, with Course itself at the top
 // checks : Course is a valid course
-
 
 void PrintLinearOrder(ofstream & OutFile, stack <int> & Prereq);
 // requires : OutFile has been opened for output; PreReq is created,
