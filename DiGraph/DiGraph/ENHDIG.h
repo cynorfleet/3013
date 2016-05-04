@@ -10,6 +10,7 @@ DATE :			November 7, 1998
 
 #include <fstream>
 #include <iostream>
+#include <stack>
 #include "DiGraph.h"
 
 using namespace std;
@@ -44,16 +45,22 @@ void Complement(DiGraph & G, DiGraph & GComp);
 //                 connected in G
 // ErrorCondition : none
 
-/*
-void FindLinearOrder(DiGraph & G, int Course, Stack & Prerequisites);
+
+void FindLinearOrder(DiGraph & G, int & Course, stack <int> & Prerequisites);
 // requires : G is created, Prerequisites is created, Course is a valid course
 // ensures : G = #G; Prerequisites contains the sequence of courses that have
 //           to be taken before Course, with Course itself at the top
 // checks : Course is a valid course
 
-void PrintLinearOrder(ofstream & OutFile, Stack & Prereq);
+void DoLinearOrder(DiGraph & G, int & Course, stack <int> & PreReq, ControlData & Visited);
+// requires : G is created, Prerequisites is created, Course is a valid course
+// ensures : G = #G; Prerequisites contains the sequence of courses that have
+//           to be taken before Course, with Course itself at the top
+// checks : Course is a valid course
+
+
+void PrintLinearOrder(ofstream & OutFile, stack <int> & Prereq);
 // requires : OutFile has been opened for output; PreReq is created,
 //            and its top item is the "target course" for which the rest
 //            of the items on the stack are prerequisites
 // checks : none
-*/

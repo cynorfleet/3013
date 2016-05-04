@@ -63,5 +63,8 @@
     <None Include="t">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="test">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

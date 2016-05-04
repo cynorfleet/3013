@@ -1,3 +1,4 @@
-﻿  DIGRAPH.cpp
+﻿  Source.cpp
+c:\users\kumin\github\3013\digraph\digraph\source.cpp(72): warning C4390: ';': empty controlled statement found; is this the intent?
   DiGraph.vcxproj -> C:\Users\kumin\GitHub\3013\DiGraph\x64\Debug\DiGraph.exe
   DiGraph.vcxproj -> C:\Users\kumin\GitHub\3013\DiGraph\x64\Debug\DiGraph.pdb (Partial PDB)

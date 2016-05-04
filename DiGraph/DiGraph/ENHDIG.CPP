@@ -128,53 +128,84 @@ void Complement(DiGraph & G, DiGraph & GComp)
 	}
 }
 
-/*
-void DoLinearOrder(DiGraph & G, int Course, Stack & PreReq, ControlData & Visited)
+
+void DoLinearOrder(DiGraph & G, int & Course, stack <int> & PreReq, ControlData & Visited)
 // requires : G is created, PreReq is created, Course is a valid course
 // ensures : G is unchanged; PreReq contains the sequence of courses that
 //           have to be taken before Course, with Course itself at the top
 // checks : Course is a valid course
 {
-  int i;
-
   // start at vertex <course>, mark vertex <course> as visited
+  Visited[Course] = 1;
 
 	 // for (each vertex in G which has not already been visited
+  for (int z = 0; z < G.GetNumberOfVertices(); z++)
+  {
+	  //if (there is an edge between <course> and <i>, and it has not been visited
+	  
+	  if ((G.IsEdge(Course, z)) && (Visited[z] == 0))
+	  {
+		  Visited[z] = 1;
+		// recursively call  LinearOrder for (vertex <i>)
+		  DoLinearOrder(G, z, PreReq, Visited);
+	  }
 
-	  //if (there is an edge between <course> and <i>, recursively
-	  // call  LinearOrder for (vertex <i>
-
+  }
 	  // with each return (backtrack) from a call to  LinearOrder,
 	  // add the vertex (for (which that call was made) to PreReq
+	  PreReq.emplace(Course);
+ }
 
-// }        LinearOrder
-*/
 
-/*
-void FindLinearOrder(DiGraph & G, int Course, Stack & Prerequisites)
+void FindLinearOrder(DiGraph & G, int & Course, stack <int> & Prerequisites)
 // requires : G is created, Prerequisites is created, Course is a valid course
 // ensures : G = #G; Prerequisites contains the sequence of courses that have
 //           to be taken before Course, with Course itself at the top
 // checks : Course is a valid course
 {
 	ControlData Visited;
-	int i;
-	// Find Linear Order
 
 	// initialize array Visited
+	for (int z = 0; z < G.GetNumberOfVertices(); z++)
+		Visited[z] = 0;
 
 	// clear stack Prerequisites
+	while (!(Prerequisites.empty()))
+		Prerequisites.pop();
 
-	// checkif (Course is valid course number
-}  //Find Linear Order
-/*
+	//Call Do Linear
+	DoLinearOrder(G, Course, Prerequisites, Visited);
+}
 
-/*
-void PrintLinearOrder (ofstream & OutFile, Stack & PreReq)
+
+
+void PrintLinearOrder (ofstream & OutFile, stack <int> & PreReq)
 // requires : OutFile has been opened for (output; PreReq is created,
 //            and its top item is the "target course" for (which the rest
 //            of the items on the stack are prerequisites
 // checks : none
-{
+{	
+	//create temp stack
+	stack <int> altstack;
+
+	OutFile << "\nThe sequence of course to take before ";
+	OutFile << PreReq.top();
+	PreReq.pop();
+	OutFile << " is:\n";
+	//While the main stack still has prerequisites
+	while (!PreReq.empty())
+	{
+		//put them in altstack in ascending priority
+		altstack.emplace(PreReq.top());
+		PreReq.pop();
+	}
+	//while altstack is not empty
+	while (!altstack.empty())
+	{
+		//print contents of altstack
+		OutFile << altstack.top() << "\t";
+		altstack.pop();
+		OutFile << "\nin that order.";
+	}
+
 }
-*/

@@ -19,6 +19,18 @@ using namespace std;
 // Error Condition :if incorrect infile name reenter
 void OpenFiles(ifstream &, ofstream &);
 
+// PreCondition	:	Graph is created
+// PostCondition :	Will request user for course #, then verify it. Will change
+//					coursenum, otherwise graph is unchanged.
+// Error Condition :if course number (< 0) or (> |vertices) print error
+bool GetCourse(DiGraph, int &);
+
+// PreCondition	:	Graph is created
+// PostCondition :	Will request user for course #, then verify it. Will change
+//					coursenum, otherwise graph is unchanged.
+// Error Condition :if course number (< 0) or (> |vertices) print error
+bool GoAgain();
+
 // PreCondition :	NONE
 // PostCondition :	The prerequisites for the courses in a program of study
 //					are read from an input file, and the prerequisites for
@@ -32,6 +44,9 @@ int main()
 	ifstream infile;
 	ofstream outfile;
 	DiGraph graph, graphcomp;
+	stack <int> req;
+	int course = NULL;
+	char choice = NULL;
 
 	// open input & output files
 	OpenFiles(infile, outfile);
@@ -51,12 +66,18 @@ int main()
 	// 5B find, and print to outfile, prerequisites for selected courses
 
 	// while user selects courses to process
-	//get valid course
-	//find linear order
-	//print linear order
-
-	//do you want to go again?
-
+	do
+	{
+		//get valid course
+		if(GetCourse(graph, course));
+		{
+			//find linear order
+			FindLinearOrder(graph, course, req);
+			//print linear order
+			PrintLinearOrder(outfile, req);
+		}
+		//do you want to go again?
+	} while (GoAgain());
 	//5A and 5B close files
 	infile.close();
 	outfile.close();
@@ -98,4 +119,46 @@ void OpenFiles(ifstream & infile, ofstream & outfile)
 		}
 		//loop until valid filename
 	} while (!infile);
+}
+
+bool GetCourse(DiGraph g, int & coursenum)
+{
+		do
+		{
+			cout << "Please enter desired course number: ";
+			cin >> coursenum;
+
+			//if course number is outside range print error
+			if ((coursenum <= 0) && (coursenum <= g.GetNumberOfVertices()))
+				cout << "\nERROR: Invalid course number\n";
+			//loop until valid entry
+		} while ((coursenum <= 0) && (coursenum <= g.GetNumberOfVertices()));
+		if (g.OutDegree(g, coursenum) > 0)
+			return true;
+		else
+		{
+			cout << "\nThis course needs no prerequisisites.";
+			return false;
+		}
+}
+
+bool GoAgain()
+{
+	char choice = NULL;
+	//Ask user to continue
+	do 
+	{
+		cout << "\nDo you want to process a course for prerequisites: (Y/N)";
+		cin >> choice;
+		choice = tolower(choice);
+		//if invalid input print error
+		if (choice != 'y' && choice != 'n')
+			cout << "\nERROR: Invalid choice. Please reenter.\n";
+		//loop until valid choice
+	} while (choice != 'y' && choice != 'n');
+	//if they want to continue return true
+	if (choice == 'y')
+		return true;
+	else
+		return false;
 }
